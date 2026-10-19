@@ -516,18 +516,18 @@ body::before {
 .pv-casa-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--ks-rule), transparent); }
 
 .pv-products.is-list { display: flex; flex-direction: column; gap: 10px; }
-.pv-products.is-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.pv-products.is-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; width: 100%; }
 @media (min-width: 600px) {
-  .pv-products.is-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .pv-products.is-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 }
 @media (min-width: 900px) {
-  .pv-products.is-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .pv-products.is-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 }
 @media (min-width: 1200px) {
-  .pv-products.is-grid { grid-template-columns: repeat(5, 1fr); gap: 18px; }
+  .pv-products.is-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
 }
 
-.pv-card { position: relative; }
+.pv-card { position: relative; min-width: 0; width: 100%; box-sizing: border-box; }
 
 /* ROW */
 .pv-card-row {
@@ -2252,4 +2252,211 @@ body::before {
   0% { transform: scale(0.9); opacity: 0.8; }
   100% { transform: scale(1.4); opacity: 0; }
 }
+
+/* ============================================================================
+   RESPONSIVE MOBILE ENGINE (ANTI-CUTOFF & COMPACT OLED VIEWPORT)
+   ============================================================================ */
+
+/* Prevenir desbordamiento horizontal global */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+.pv-app {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+.pv-main {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Grid de combos en el home (soporte fluido desktop & mobile) */
+.pv-combos-home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  /* Contenedores con márgenes limpios en celulares */
+  .pv-container {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .pv-block {
+    padding: 18px 10px 20px !important;
+    margin-top: 8px !important;
+    border-radius: 16px !important;
+  }
+  .pv-cat-section {
+    padding: 16px 10px 0 !important;
+  }
+  .pv-sticky-top {
+    padding: 10px 10px 8px !important;
+  }
+  .pv-screen {
+    padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Grid de productos 2 columnas simétricas sin desborde */
+  .pv-products.is-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  /* Tarjeta de producto Tile en móvil */
+  .pv-card-tile {
+    padding: 12px 8px 12px !important;
+    border-radius: 16px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .pv-tile-bottle {
+    height: 112px !important;
+    margin-bottom: 8px !important;
+    border-radius: 10px !important;
+  }
+  .pv-tile-bottle img {
+    max-height: 98px !important;
+  }
+  .pv-tile-name {
+    font-size: 0.84rem !important;
+    line-height: 1.25 !important;
+    min-height: 2.5em !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    word-break: break-word !important;
+    text-align: center !important;
+  }
+  .pv-tile-meta {
+    font-size: 0.68rem !important;
+    margin-top: 2px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+    text-align: center !important;
+  }
+  /* Pie de tarjeta en móvil: precio arriba y botón ancho completo abajo */
+  .pv-tile-foot {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
+    padding-top: 8px !important;
+    width: 100% !important;
+  }
+  .pv-tile-foot .pv-price {
+    font-size: 1rem !important;
+    text-align: center !important;
+    display: block !important;
+  }
+  .pv-tile-foot .pv-add {
+    width: 100% !important;
+    min-height: 36px !important;
+    padding: 0 8px !important;
+    font-size: 0.8rem !important;
+    border-radius: 8px !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+  }
+  .pv-tile-foot .pv-stepper {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+  .pv-tile-tag {
+    top: 8px !important;
+    left: 8px !important;
+  }
+  .pv-tile-tag .pv-tag {
+    font-size: 0.55rem !important;
+    padding: 2px 6px !important;
+  }
+
+  /* Tarjetas de combo en móvil: pie vertical con botón 100% sin recortar texto */
+  .pv-combos-home-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .pv-combo-list {
+    padding: 8px 10px 0 !important;
+    gap: 14px !important;
+  }
+  .pv-combo {
+    border-radius: 16px !important;
+  }
+  .pv-combo-content {
+    padding: 16px 14px !important;
+  }
+  .pv-combo-head {
+    gap: 10px !important;
+  }
+  .pv-combo-name {
+    font-size: 1.15rem !important;
+  }
+  .pv-combo-desc {
+    font-size: 0.82rem !important;
+  }
+  .pv-combo-save {
+    padding: 6px 10px !important;
+    font-size: 0.64rem !important;
+  }
+  .pv-combo-save strong {
+    font-size: 0.88rem !important;
+  }
+  .pv-combo-items {
+    margin: 12px 0 !important;
+    padding: 10px 0 !important;
+    gap: 8px !important;
+  }
+  .pv-combo-items li {
+    font-size: 0.84rem !important;
+  }
+  .pv-combo-foot {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    margin-top: 14px !important;
+  }
+  .pv-combo-foot .pv-combo-price {
+    display: flex !important;
+    align-items: baseline !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+  }
+  .pv-combo-foot .pv-add,
+  .pv-combo-foot .pv-add-block {
+    width: 100% !important;
+    min-height: 48px !important;
+    font-size: 0.95rem !important;
+    border-radius: 14px !important;
+    justify-content: center !important;
+    white-space: normal !important;
+    box-sizing: border-box !important;
+  }
+  .pv-combo-foot .pv-stepper {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  /* Botón flotante de WhatsApp optimizado para pantalla táctil */
+  .pv-floating-wa {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 14px !important;
+    width: 48px !important;
+    height: 48px !important;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4) !important;
+  }
+  .pv-floating-wa svg {
+    width: 24px !important;
+    height: 24px !important;
+  }
+}
+
 

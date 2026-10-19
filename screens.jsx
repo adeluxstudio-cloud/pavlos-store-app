@@ -318,7 +318,7 @@ function HomeScreen({ estado, cart, add, inc, dec, cardStyle, goNav, goCat }) {
             Todos los combos <Icon name="chevron" size={14} />
           </button>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "16px" }}>
+        <div className="pv-combos-home-grid">
           {COMBOS.slice(0, 2).map((c, i) => (
             <ComboCard key={c.id} c={c} featured={i === 0} qty={cart[c.id] || 0}
               onAdd={() => add(c.id)} onInc={() => inc(c.id)} onDec={() => dec(c.id)} />

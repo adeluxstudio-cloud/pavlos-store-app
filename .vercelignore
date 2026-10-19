@@ -1,3 +1,8 @@
 scraps/
+scratch/
+scratch_*
+dislicores-*.png
+.playwright-cli/
 *.xlsx
 .thumbnail
+*.log

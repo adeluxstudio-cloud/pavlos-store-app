@@ -123,12 +123,16 @@ function AdminLogin({ onOk }) {
   const [u, setU] = React.useState("");
   const [pw, setPw] = React.useState("");
   const [show, setShow] = React.useState(false);
+  const [remember, setRemember] = React.useState(true);
   const [err, setErr] = React.useState("");
 
   const submit = (e) => {
     e.preventDefault();
     if (u.trim() === PV_ADMIN_USER && pw === PV_ADMIN_PASS) {
-      sessionStorage.setItem(PV_ADMIN_SESSION, "1");
+      if (remember) {
+        try { localStorage.setItem(PV_ADMIN_SESSION, "1"); } catch (e) {}
+      }
+      try { sessionStorage.setItem(PV_ADMIN_SESSION, "1"); } catch (e) {}
       onOk();
     } else {
       setErr("Usuario o contraseña incorrectos.");
@@ -155,6 +159,11 @@ function AdminLogin({ onOk }) {
               <Icon name={show ? "eyeoff" : "user"} size={17} />
             </button>
           </div>
+        </label>
+
+        <label className="pa-remember">
+          <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
+          <span>Recordar sesión en este equipo</span>
         </label>
 
         {err && <div className="pa-login-err">{err}</div>}
@@ -381,6 +390,209 @@ function ReelsEditor({ onToast }) {
   );
 }
 
+/* ---- Editor de Banners Promocionales ------------------------------------ */
+function BannersEditor({ onToast }) {
+  const A = window.PAVLOS.admin;
+  const [banners, setBanners] = React.useState(() => window.PAVLOS.CONFIG.banners || []);
+
+  const updateItem = (index, field, val) => {
+    const next = banners.map((b, i) => (i === index ? { ...b, [field]: val } : b));
+    setBanners(next);
+    A.updateBanners(next);
+    onToast();
+  };
+
+  const addBanner = () => {
+    const newB = {
+      id: "b-" + Date.now(),
+      tag: "PROMOCIÓN FLASH",
+      titulo: "Nuevo anuncio destacado",
+      sub: "Texto secundario llamativo para tus clientes",
+      cta: "Pedir ahora",
+      action: "catalogo",
+      badge: "Especial",
+    };
+    const next = [...banners, newB];
+    setBanners(next);
+    A.updateBanners(next);
+    onToast();
+  };
+
+  const removeBanner = (index) => {
+    const next = banners.filter((_, i) => i !== index);
+    setBanners(next);
+    A.updateBanners(next);
+    onToast();
+  };
+
+  return (
+    <div className="pa-banners-editor">
+      <div className="pa-toolbar">
+        <p className="pa-toolbar-note">
+          Los banners se muestran en un carrusel dinámico en la parte superior del Inicio.
+        </p>
+        <button type="button" className="ks-button ks-button-primary pa-add-btn" onClick={addBanner}>
+          <Icon name="plus" size={16} /> Banner
+        </button>
+      </div>
+
+      {banners.length === 0 && (
+        <div className="pa-empty">
+          <Icon name="sparkle" size={26} />
+          <p>No tienes banners activos. Haz clic en "+ Banner" para crear uno.</p>
+        </div>
+      )}
+
+      {banners.map((b, i) => (
+        <div key={b.id || i} className="pa-banner-edit-card">
+          <div className="pa-item-top">
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span className="pa-cloud-status is-local">Banner #{i + 1}</span>
+              <strong>{b.titulo || "Sin título"}</strong>
+            </div>
+            <button type="button" className="pa-icon-btn pa-del" onClick={() => removeBanner(i)} aria-label="Borrar">
+              <Icon name="trash" size={17} />
+            </button>
+          </div>
+          <div className="pa-grid2">
+            <TextField label="Etiqueta / Tag" value={b.tag} onCommit={(v) => updateItem(i, "tag", v)} placeholder="DOMICILIOS FLASH, COMBOS…" />
+            <TextField label="Badge / Pildora" value={b.badge || ""} onCommit={(v) => updateItem(i, "badge", v)} placeholder="20-30 min, Ahorro…" />
+          </div>
+          <TextField label="Título principal" value={b.titulo} onCommit={(v) => updateItem(i, "titulo", v)} full />
+          <TextField label="Subtítulo / Mensaje" value={b.sub} onCommit={(v) => updateItem(i, "sub", v)} full />
+          <div className="pa-grid2">
+            <TextField label="Texto botón (CTA)" value={b.cta || "Pedir ahora"} onCommit={(v) => updateItem(i, "cta", v)} />
+            <SelectField
+              label="Destino al hacer clic"
+              value={b.action || "catalogo"}
+              options={[
+                { value: "catalogo", label: "Catálogo completo" },
+                { value: "combos", label: "Pantalla de Combos" },
+                { value: "aguardiente", label: "Catálogo → Aguardientes" },
+                { value: "ron", label: "Catálogo → Rones" },
+                { value: "whiskey", label: "Catálogo → Whiskies" },
+                { value: "cerveza", label: "Catálogo → Cervezas" },
+                { value: "vapes", label: "Catálogo → Vapes" },
+                { value: "aperitivos", label: "Catálogo → Cócteles Like" },
+              ]}
+              onCommit={(v) => updateItem(i, "action", v)}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ---- Tarjeta de Sincronización en la Nube (Firestore) -------------------- */
+function CloudSyncCard({ onToast }) {
+  const cloud = window.PAVLOS.cloud;
+  const [syncing, setSyncing] = React.useState(false);
+  const [msg, setMsg] = React.useState("");
+  const [showConfig, setShowConfig] = React.useState(false);
+  const [configJson, setConfigJson] = React.useState(() => {
+    const cfg = cloud.getConfig();
+    return cfg ? JSON.stringify(cfg, null, 2) : "";
+  });
+
+  const handlePush = async () => {
+    setSyncing(true);
+    setMsg("");
+    const ok = await cloud.pushAllToCloud();
+    setSyncing(false);
+    if (ok) {
+      setMsg("✅ Catálogo sincronizado en vivo a Firestore. Todos los clientes verán los cambios.");
+      onToast();
+    } else {
+      setMsg("⚠️ No conectado a Firebase aún. Pega tus credenciales abajo primero.");
+    }
+  };
+
+  const handleSaveConfig = () => {
+    try {
+      const parsed = JSON.parse(configJson.trim());
+      if (!parsed.projectId) {
+        alert("El objeto de configuración debe tener al menos 'projectId'.");
+        return;
+      }
+      cloud.setConfig(parsed);
+      setShowConfig(false);
+      setMsg("🟢 Firebase configurado. Conectando en vivo...");
+      onToast();
+    } catch (err) {
+      alert("JSON de configuración inválido: " + err.message);
+    }
+  };
+
+  const connected = cloud.isConnected();
+
+  return (
+    <div className="pa-settings-card">
+      <div className="pa-settings-row">
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <strong>Sincronización en la Nube (Firebase Firestore)</strong>
+            <span className={"pa-cloud-status " + (connected ? "is-connected" : "is-local")}>
+              <span className="pa-cloud-dot" /> {connected ? "Conectado" : "Modo Local"}
+            </span>
+          </div>
+          <span>
+            {connected
+              ? "Tus cambios de precios, productos y fotos se sincronizan en vivo sin redesplegar."
+              : "Operando en almacenamiento local del navegador. Conecta Firebase para sincronizar todos los clientes."}
+          </span>
+        </div>
+        <button
+          type="button"
+          className="pa-btn-primary-line"
+          disabled={syncing}
+          onClick={handlePush}>
+          <Icon name="refresh" size={15} /> {syncing ? "Sincronizando..." : "Subir a la nube"}
+        </button>
+      </div>
+
+      {msg && (
+        <div style={{ padding: "10px 16px", fontSize: 13, color: connected ? "var(--ks-patina)" : "var(--pv-gold)", background: "var(--ks-lacquer-deep)" }}>
+          {msg}
+        </div>
+      )}
+
+      <div className="pa-settings-row">
+        <div>
+          <strong>Credenciales de Firebase</strong>
+          <span>Configura o actualiza el acceso a tu proyecto de Google Firebase.</span>
+        </div>
+        <button
+          type="button"
+          className="pa-btn-line"
+          onClick={() => setShowConfig(!showConfig)}>
+          <Icon name="edit" size={15} /> {showConfig ? "Ocultar" : "Configurar"}
+        </button>
+      </div>
+
+      {showConfig && (
+        <div style={{ padding: "14px 16px", background: "var(--ks-lacquer-deep)", borderTop: "1px solid var(--ks-rule)" }}>
+          <p style={{ margin: "0 0 8px", fontSize: 12.5, color: "var(--ks-text-muted)", lineHeight: 1.5 }}>
+            Pega el objeto <code className="pa-mono">firebaseConfig</code> generado en la consola de Firebase:
+          </p>
+          <textarea
+            className="pa-textarea"
+            rows={7}
+            style={{ width: "100%", fontFamily: "var(--ks-mono)", fontSize: 12 }}
+            value={configJson}
+            placeholder={`{\n  "apiKey": "AIzaSy...",\n  "projectId": "pavlos-store-app",\n  "appId": "1:..."\n}`}
+            onChange={(e) => setConfigJson(e.target.value)}
+          />
+          <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 10 }}>
+            <button type="button" className="pa-btn-ghost" onClick={() => setShowConfig(false)}>Cancelar</button>
+            <button type="button" className="pa-btn-line" onClick={handleSaveConfig}>Guardar y Conectar</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ---- Aviso "Guardado" --------------------------------------------------- */
 function SavedToast({ trigger }) {
   const [vis, setVis] = React.useState(false);
@@ -395,7 +607,7 @@ function SavedToast({ trigger }) {
 
 /* ============================ PANEL ===================================== */
 function AdminPanel({ onLogout }) {
-  const { PRODUCTOS, COMBOS, CATEGORIAS, admin, pesos } = window.PAVLOS;
+  const { PRODUCTOS, COMBOS, CATEGORIAS, admin, cloud, pesos } = window.PAVLOS;
   const [tab, setTab] = React.useState("productos");
   const [q, setQ] = React.useState("");
   const [cat, setCat] = React.useState("all");
@@ -405,6 +617,8 @@ function AdminPanel({ onLogout }) {
   const [resetConfirm, setResetConfirm] = React.useState(false);
   const fileRef = React.useRef(null);
   const fireToast = () => setToast(Date.now());
+
+  const isCloudOnline = cloud && cloud.isConnected();
 
   const term = q.trim().toLowerCase();
   const prods = PRODUCTOS.filter((p) => {
@@ -445,7 +659,14 @@ function AdminPanel({ onLogout }) {
           <img src="assets/pavlos-logo.png" alt="" className="pa-head-logo" />
           <div>
             <div className="pa-head-word pv-wordmark">Pavlo´s Store</div>
-            <div className="pa-head-role"><Icon name="lock" size={12} /> Panel del dueño</div>
+            <div className="pa-head-role">
+              <Icon name="lock" size={12} />
+              <span>Panel del dueño · </span>
+              <span className={"pa-cloud-status " + (isCloudOnline ? "is-connected" : "is-local")}>
+                <span className="pa-cloud-dot" />
+                {isCloudOnline ? "Nube Activa" : "Modo Local"}
+              </span>
+            </div>
           </div>
         </div>
         <div className="pa-head-r">
@@ -461,11 +682,14 @@ function AdminPanel({ onLogout }) {
         <button type="button" className={"pa-tab" + (tab === "combos" ? " is-active" : "")} onClick={() => setTab("combos")}>
           <Icon name="combo" size={16} /> Combos <span>{COMBOS.length}</span>
         </button>
+        <button type="button" className={"pa-tab" + (tab === "banners" ? " is-active" : "")} onClick={() => setTab("banners")}>
+          <Icon name="sparkle" size={15} /> Banners
+        </button>
         <button type="button" className={"pa-tab" + (tab === "instagram" ? " is-active" : "")} onClick={() => setTab("instagram")}>
           <Icon name="instagram" size={15} /> Instagram
         </button>
         <button type="button" className={"pa-tab" + (tab === "ajustes" ? " is-active" : "")} onClick={() => setTab("ajustes")}>
-          <Icon name="refresh" size={15} /> Datos
+          <Icon name="refresh" size={15} /> Ajustes & Nube
         </button>
       </div>
 
@@ -514,14 +738,13 @@ function AdminPanel({ onLogout }) {
           </>
         )}
 
+        {tab === "banners" && <BannersEditor onToast={fireToast} />}
+
         {tab === "instagram" && <ReelsEditor onToast={fireToast} />}
 
         {tab === "ajustes" && (
           <div className="pa-settings">
-            <div className="pa-note">
-              <strong>¿Dónde se guardan los cambios?</strong>
-              <p>Por ahora se guardan en este navegador (este equipo). Sirve para ti y para la vista previa. Cuando publiques la página de verdad, se conecta una base de datos en la nube para que los cambios se vean en vivo para todos los clientes, sin tocar el código.</p>
-            </div>
+            <CloudSyncCard onToast={fireToast} />
 
             <div className="pa-settings-card">
               <div className="pa-settings-row">
@@ -563,12 +786,24 @@ function AdminPanel({ onLogout }) {
 
 /* ============================ APP ROOT ================================== */
 function AdminApp({ goldTone }) {
-  const [authed, setAuthed] = React.useState(() => sessionStorage.getItem(PV_ADMIN_SESSION) === "1");
+  const [authed, setAuthed] = React.useState(() => {
+    try {
+      return sessionStorage.getItem(PV_ADMIN_SESSION) === "1" || localStorage.getItem(PV_ADMIN_SESSION) === "1";
+    } catch (e) {
+      return false;
+    }
+  });
   const style = { "--pv-gold": goldTone || "var(--ks-kinpaku)", "--ks-kinpaku": goldTone || "var(--ks-kinpaku)" };
   return (
     <div className="pa-root" style={style}>
       {authed
-        ? <AdminPanel onLogout={() => { sessionStorage.removeItem(PV_ADMIN_SESSION); setAuthed(false); }} />
+        ? <AdminPanel onLogout={() => {
+            try {
+              sessionStorage.removeItem(PV_ADMIN_SESSION);
+              localStorage.removeItem(PV_ADMIN_SESSION);
+            } catch (e) {}
+            setAuthed(false);
+          }} />
         : <AdminLogin onOk={() => setAuthed(true)} />}
     </div>
   );

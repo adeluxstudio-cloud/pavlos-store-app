@@ -18,39 +18,35 @@
 
 :root {
   /* ===== Brand anchors ===================================================
-     Two anchors carry the brand. Kinpaku gold = commitment, brand voice,
-     primary CTA. Verdigris patina = state, signal, "improved". Everything
-     else is supporting. */
-  --ks-kinpaku:        oklch(84% 0.19 80.46);  /* primary accent / wordmark / icon */
-  --ks-kinpaku-pale:   oklch(86% 0.07 84);     /* hover lift, pale fills */
-  --ks-kinpaku-rich:   oklch(77% 0.13 82);     /* active CTA, severity-medium */
-  --ks-kinpaku-deep:   oklch(61% 0.085 78);    /* borders against the brand */
+     Opción 1: Champagne Titanium & Obsidian (Lujo contemporáneo tech-craft) */
+  --ks-kinpaku:        oklch(83% 0.09 78);     /* Champagne Titanium: distinguido, cálido */
+  --ks-kinpaku-pale:   oklch(89% 0.06 82);     /* Hover lift champán */
+  --ks-kinpaku-rich:   oklch(75% 0.10 75);     /* Active CTA */
+  --ks-kinpaku-deep:   oklch(58% 0.07 75);     /* Hairlines y acentos */
 
-  --ks-patina:         oklch(70% 0.12 188);    /* secondary accent */
-  --ks-patina-pale:    oklch(82% 0.07 188);    /* hover lift on patina */
-  --ks-patina-deep:    oklch(49% 0.08 188);    /* deep oxide, dark variants */
+  --ks-patina:         oklch(74% 0.11 165);    /* Menta esmeralda para estado abierto */
+  --ks-patina-pale:    oklch(84% 0.07 165);    /* Hover pátina */
+  --ks-patina-deep:    oklch(50% 0.08 165);
 
-  --ks-vermilion:      oklch(58% 0.15 35);     /* warning / error / anti-pattern only */
+  --ks-vermilion:      oklch(62% 0.17 32);     /* Vermilion advertencia */
 
-  /* ===== Surfaces — warm-black lacquer carries everything ================ */
-  --ks-lacquer:        oklch(7% 0.006 95);     /* page ground */
-  --ks-lacquer-deep:   oklch(4% 0.004 95);     /* deepest inset, footer depth */
-  --ks-lacquer-raised: oklch(11% 0.006 95);    /* raised panels, cards, inputs */
-  --ks-graphite:       oklch(15% 0.008 95);    /* inactive surfaces */
-  --ks-graphite-2:     oklch(19% 0.008 95);    /* one step up from graphite */
+  /* ===== Surfaces — Obsidiana OLED + Grafito titanio ===================== */
+  --ks-lacquer:        oklch(5% 0.004 95);     /* #060608 Obsidiana profunda */
+  --ks-lacquer-deep:   oklch(3.2% 0.003 95);   /* #030305 Base más profunda */
+  --ks-lacquer-raised: oklch(10% 0.008 95);    /* #111116 Paneles y tarjetas */
+  --ks-graphite:       oklch(14.5% 0.009 95);  /* Superficies inactivas */
+  --ks-graphite-2:     oklch(18.5% 0.01 95);   /* Elevación secundaria */
 
-  /* ===== Text — runs near-neutral + bright so copy reads crisp on lacquer.
-     Warmth lives in the gold accents + surfaces, never in the type. ======= */
-  --ks-champagne:      oklch(91% 0 0);         /* headlines, <strong> */
-  --ks-text:           oklch(88% 0 0);         /* body */
-  --ks-text-muted:     oklch(72% 0 0);         /* captions, meta */
-  --ks-text-faint:     oklch(62% 0 0);         /* subdued */
-  --ks-text-mute-deep: oklch(52% 0 0);         /* disabled */
+  /* ===== Text — Blanco perla champán para legibilidad suprema ========== */
+  --ks-champagne:      oklch(94% 0.012 85);    /* #F3EFEA Títulos */
+  --ks-text:           oklch(88% 0.008 85);    /* Texto cuerpo */
+  --ks-text-muted:     oklch(68% 0.008 85);    /* Subtítulos y metadatos */
+  --ks-text-faint:     oklch(56% 0.008 85);    /* Textos secundarios */
+  --ks-text-mute-deep: oklch(45% 0.008 85);    /* Desactivado */
 
-  /* ===== Rules — default hairline is neutral; "strong" stays gold (focus,
-     active, structural brand anchors). ==================================== */
-  --ks-rule:           oklch(78% 0 0 / 0.16);
-  --ks-rule-strong:    oklch(74% 0.09 82 / 0.6);
+  /* ===== Rules — Hairlines translúcidos precisos ======================== */
+  --ks-rule:           oklch(100% 0 0 / 0.08);
+  --ks-rule-strong:    oklch(83% 0.09 78 / 0.35);
 
   /* ===== Code — one treatment site-wide ================================= */
   --ks-code-fg:           oklch(91% 0 0);

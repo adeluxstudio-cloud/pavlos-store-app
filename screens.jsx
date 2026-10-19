@@ -22,139 +22,329 @@ function OpenPill({ estado }) {
   );
 }
 
-/* ============================ INICIO ===================================== */
+/* ---- Banner Hero Promocional Dinámico ---------------------------------- */
+function PromoHeroBanner({ banners, goNav, goCat }) {
+  const [curr, setCurr] = React.useState(0);
+  if (!banners || !banners.length) return null;
+
+  React.useEffect(() => {
+    if (banners.length <= 1) return;
+    const t = setInterval(() => {
+      setCurr(c => (c + 1) % banners.length);
+    }, 5000);
+    return () => clearInterval(t);
+  }, [banners.length]);
+
+  const b = banners[curr] || banners[0];
+
+  const handleAction = () => {
+    if (b.action === "combos") {
+      goNav("combos");
+    } else if (b.action && b.action !== "catalogo") {
+      goNav("catalogo");
+      if (goCat) goCat(b.action);
+    } else {
+      goNav("catalogo");
+    }
+  };
+
+  return (
+    <div className="pv-banner-carousel" style={{ padding: "0 14px", margin: "16px 0 6px" }}>
+      <div className="pv-banner-card" onClick={handleAction} style={{ cursor: "pointer" }}>
+        <div className="pv-banner-badge">
+          <span>{b.tag}</span>
+          {b.badge && <span className="pv-banner-pill">{b.badge}</span>}
+        </div>
+        <h3 className="pv-banner-title">{b.titulo}</h3>
+        <p className="pv-banner-sub">{b.sub}</p>
+        <div className="pv-banner-action">
+          <span>{b.cta || "Pedir ahora"}</span>
+          <Icon name="arrow" size={14} />
+        </div>
+      </div>
+      {banners.length > 1 && (
+        <div className="pv-banner-dots">
+          {banners.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={"pv-banner-dot" + (i === curr ? " is-active" : "")}
+              onClick={(e) => { e.stopPropagation(); setCurr(i); }}
+              aria-label={`Banner ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---- Hero Slider (Dislicores Benchmark) -------------------------------- */
+function HeroSlider({ goNav, goCat }) {
+  const [curr, setCurr] = React.useState(0);
+  const slides = [
+    {
+      id: "s1",
+      tag: "DOMICILIOS EXPRESS · 20-30 MIN",
+      titulo: "El Trago de la Noche Frío en tu Puerta",
+      sub: "Aguardiente Amarillo, Antioqueño, Ron Medellín y whiskies al mejor precio en Santo Tomás y Palmar.",
+      cta: "Pedir Aguardiente",
+      action: () => { goNav("catalogo"); goCat("aguardiente"); },
+      img: "uploads/lote_imagenes_procesado_1784310337875/aguardiente-amarillo-750.webp"
+    },
+    {
+      id: "s2",
+      tag: "AHORRO GARANTIZADO · HASTA 20% OFF",
+      titulo: "Combos Rumberos Listos para la Fiesta",
+      sub: "Botella + Hielo + Mezcladores en un solo precio. Destapa y celebra sin enredos.",
+      cta: "Ver Combos Rumberos",
+      action: () => goNav("combos"),
+      img: "uploads/lote_imagenes_procesado_1784310337875/combo-ron-noche.webp"
+    },
+    {
+      id: "s3",
+      tag: "100% FRÍO · CERVEZAS Y SNACKS",
+      titulo: "Coronitas, Águila, Heineken y Mecatos",
+      sub: "Licores y pasabocas a la temperatura ideal para no parar la rumba.",
+      cta: "Pedir Cervezas",
+      action: () => { goNav("catalogo"); goCat("cerveza"); },
+      img: "uploads/lote_imagenes_procesado_1784310337875/corona-botella-330.webp"
+    }
+  ];
+
+  const [isPaused, setIsPaused] = React.useState(false);
+  const touchStartRef = React.useRef(0);
+  const touchDeltaRef = React.useRef(0);
+
+  const prev = React.useCallback(() => {
+    setCurr(c => (c - 1 + slides.length) % slides.length);
+  }, [slides.length]);
+
+  const next = React.useCallback(() => {
+    setCurr(c => (c + 1) % slides.length);
+  }, [slides.length]);
+
+  React.useEffect(() => {
+    if (isPaused) return;
+    const t = setInterval(next, 5500);
+    return () => clearInterval(t);
+  }, [next, isPaused]);
+
+  const handleTouchStart = (e) => {
+    touchStartRef.current = e.touches[0].clientX;
+    touchDeltaRef.current = 0;
+  };
+
+  const handleTouchMove = (e) => {
+    touchDeltaRef.current = e.touches[0].clientX - touchStartRef.current;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchDeltaRef.current > 45) {
+      prev();
+    } else if (touchDeltaRef.current < -45) {
+      next();
+    }
+    touchStartRef.current = 0;
+    touchDeltaRef.current = 0;
+  };
+
+  return (
+    <div
+      className="pv-hero-slider"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div
+        className="pv-slide-track"
+        style={{ transform: `translate3d(-${curr * 100}%, 0, 0)` }}
+      >
+        {slides.map((s, idx) => {
+          const isActive = idx === curr;
+          return (
+            <div
+              key={s.id}
+              className={"pv-slide" + (isActive ? " is-active" : "")}
+              aria-hidden={!isActive}
+            >
+              <div className="pv-slide-content">
+                <div className="pv-slide-tag">{s.tag}</div>
+                <h2 className="pv-slide-title">{s.titulo}</h2>
+                <p className="pv-slide-sub">{s.sub}</p>
+                <button type="button" className="pv-slide-cta" onClick={s.action}>
+                  <span>{s.cta}</span>
+                  <Icon name="arrow" size={16} />
+                </button>
+              </div>
+              <div className="pv-slide-media">
+                <img src={s.img} alt={s.titulo} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <button
+        type="button"
+        className="pv-slider-nav pv-slider-prev"
+        onClick={prev}
+        aria-label="Slide anterior"
+      >
+        <Icon name="chevronLeft" size={20} />
+      </button>
+
+      <button
+        type="button"
+        className="pv-slider-nav pv-slider-next"
+        onClick={next}
+        aria-label="Slide siguiente"
+      >
+        <Icon name="chevron" size={20} />
+      </button>
+
+      <div className="pv-slider-dots">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            className={"pv-slider-dot" + (i === curr ? " is-active" : "")}
+            onClick={() => setCurr(i)}
+            aria-label={`Slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---- Quick Category Shortcuts Grid (Dislicores Benchmark) --------------- */
+function QuickCategoryGrid({ goNav, goCat }) {
+  const cats = [
+    { id: "aguardiente", label: "Aguardiente", img: "uploads/lote_imagenes_procesado_1784310337875/aguardiente-amarillo-750.webp" },
+    { id: "ron", label: "Ron", img: "uploads/lote_imagenes_procesado_1784310337875/ron-medellin-750.webp" },
+    { id: "whiskey", label: "Whiskey", img: "uploads/lote_imagenes_procesado_1784310337875/buchanans-12-750.webp" },
+    { id: "cerveza", label: "Cervezas", img: "uploads/lote_imagenes_procesado_1784310337875/corona-botella-330.webp" },
+    { id: "tequila", label: "Tequila", img: "uploads/lote_imagenes_procesado_1784310337875/tequila-don-julio-blanco-700.webp" },
+    { id: "aperitivos", label: "Cócteles", img: "uploads/lote_imagenes_procesado_1784310337875/margarita.webp" },
+    { id: "combos", label: "Combos", img: "uploads/lote_imagenes_procesado_1784310337875/ron-medellin-extra-anejo-5-anos-750.webp", isCombo: true },
+    { id: "vapes", label: "Vapes", img: "uploads/lote_imagenes_procesado_1784310337875/box-pod-banana.webp" },
+    { id: "mecato", label: "Snacks", img: "uploads/lote_imagenes_procesado_1784310337875/natuchips-verde.webp" },
+  ];
+
+  return (
+    <div className="pv-quick-grid">
+      {cats.map(c => (
+        <div
+          key={c.id}
+          className="pv-quick-card"
+          onClick={() => {
+            if (c.isCombo) {
+              goNav("combos");
+            } else {
+              goNav("catalogo");
+              goCat(c.id);
+            }
+          }}>
+          <div className="pv-quick-card-icon">
+            <img src={c.img} alt={c.label} className="pv-quick-card-img" />
+          </div>
+          <span className="pv-quick-card-title">{c.label}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ============================ INICIO (DISLICORES STYLE) ================== */
 function HomeScreen({ estado, cart, add, inc, dec, cardStyle, goNav, goCat }) {
   const { PRODUCTOS, COMBOS, CATEGORIAS, CONFIG, IG_POSTS, getPromos, pesos } = window.PAVLOS;
-  const estrella = PRODUCTOS.find(p => p.id === "agu-amarillo-750") || PRODUCTOS.find(p => p.estrella) || PRODUCTOS[0];
-  const comboTop = COMBOS[0];
   const promos = getPromos();
+
+  // Los más vendidos / favoritos
+  const masVendidos = React.useMemo(() => {
+    return PRODUCTOS.filter(p => p.tag === "Más vendido" || p.estrella || ["aguardiente-amarillo-750", "ron-medellin-750", "buchanans-12-750", "old-parr-12-750", "aguila-negra", "corona-botella-330", "coca-cola"].includes(p.id)).slice(0, 8);
+  }, [PRODUCTOS]);
 
   return (
     <div className="pv-screen">
-      {/* Hero */}
-      <header className="pv-hero">
-        <div className="pv-hero-seam" />
-        <div className="pv-hero-inner">
-          <img className="pv-hero-logo" src="assets/pavlos-logo.png" alt="" />
-          <h1 className="pv-hero-head">Tu licorería,<br />a domicilio</h1>
-          <p className="pv-hero-tag">Lo que necesitas para la noche en el Atlántico, frío y a la puerta. Lo armas aquí y lo pides por WhatsApp.</p>
-          <div className="pv-hero-status"><OpenPill estado={estado} /></div>
-          <div className="pv-hero-cta">
-            <button type="button" className="ks-button ks-button-primary pv-cta-pulse" onClick={() => goNav("catalogo")}>
-              Pedir ahora <span className="ks-button-arrow"><Icon name="arrow" size={16} /></span>
-            </button>
-            <button type="button" className="ks-button ks-button-secondary" onClick={() => goNav("combos")}>Ver combos</button>
-          </div>
-          <div className="pv-hero-deli">
-            <span><Icon name="bike" size={17} /> Domicilio {pesos(CONFIG.domicilio)}</span>
-            <span className="pv-vsep" />
-            <span><Icon name="pin" size={16} /> {CONFIG.zonas.join(" · ")}</span>
-          </div>
-        </div>
-      </header>
+      {/* Hero Banner Slider Comercial */}
+      <HeroSlider goNav={goNav} goCat={goCat} />
 
-      {/* Promociones — carrusel horizontal */}
+      {/* Categorías Destacadas (Dislicores Quick Rail) */}
+      <QuickCategoryGrid goNav={goNav} goCat={goCat} />
+
+      {/* Promociones Destacadas */}
       {promos.length > 0 && (
-      <section className="pv-block">
+        <section className="pv-block" style={{ borderRadius: "20px", marginBottom: "28px" }}>
+          <div className="pv-block-head">
+            <h2 className="pv-block-title">Promociones del Fin de Semana</h2>
+            <button type="button" className="pv-link" onClick={() => goNav("combos")}>
+              Ver todos los combos <Icon name="chevron" size={14} />
+            </button>
+          </div>
+          <div className="pv-promo-rail">
+            {promos.map(it => (
+              <PromoCard key={it.id} item={it} qty={cart[it.id] || 0}
+                onAdd={() => add(it.id)} onInc={() => inc(it.id)} onDec={() => dec(it.id)} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Los Más Vendidos en Santo Tomás & Palmar */}
+      <section className="pv-block" style={{ borderRadius: "20px", marginBottom: "28px" }}>
         <div className="pv-block-head">
-          <span className="pv-eyebrow"><Icon name="sparkle" size={13} /> Promociones</span>
-          <button type="button" className="pv-link" onClick={() => goNav("combos")}>Ver combos <Icon name="chevron" size={14} /></button>
+          <h2 className="pv-block-title">Los Más Pedidos en Santo Tomás & Palmar</h2>
+          <button type="button" className="pv-link" onClick={() => goNav("catalogo")}>
+            Ver todo el catálogo <Icon name="chevron" size={14} />
+          </button>
         </div>
-        <div className="pv-promo-rail">
-          {promos.map(it => (
-            <PromoCard key={it.id} item={it} qty={cart[it.id] || 0}
-              onAdd={() => add(it.id)} onInc={() => inc(it.id)} onDec={() => dec(it.id)} />
+        <div className="pv-products is-grid cs-tile">
+          {masVendidos.map(p => (
+            <ProductCard key={p.id} p={p} variant="tile" qty={cart[p.id] || 0}
+              onAdd={() => add(p.id)} onInc={() => inc(p.id)} onDec={() => dec(p.id)} />
           ))}
         </div>
       </section>
-      )}
 
-      {/* Producto estrella */}
-      {estrella && (
-      <section className="pv-block">
+      {/* Combos Rumberos */}
+      <section className="pv-block" style={{ borderRadius: "20px", marginBottom: "28px" }}>
         <div className="pv-block-head">
-          <span className="pv-eyebrow"><Icon name="sparkle" size={13} /> Producto estrella</span>
+          <h2 className="pv-block-title">Combos Rumberos Listos para Tomar</h2>
+          <button type="button" className="pv-link" onClick={() => goNav("combos")}>
+            Todos los combos <Icon name="chevron" size={14} />
+          </button>
         </div>
-        <div className="pv-star-feature">
-          <div className="pv-star-stage">
-            <ProductImg p={estrella} size={148} glow />
-            <div className="pv-star-disc" />
-          </div>
-          <div className="pv-star-body">
-            <h2 className="pv-star-name">{estrella.nombre}</h2>
-            <p className="pv-star-desc">El que siempre piden. Suave, parrandero y nunca falta en la mesa.</p>
-            <div className="pv-star-foot">
-              <div>
-                <span className="pv-price pv-price-lg">{pesos(estrella.precio)}</span>
-                <span className="pv-star-vol">{estrella.variante}</span>
-              </div>
-              {estrella.disponible === false
-                ? <span className="pv-soldout pv-soldout-block">Agotado</span>
-                : cart[estrella.id] > 0
-                ? <Stepper qty={cart[estrella.id]} onInc={() => inc(estrella.id)} onDec={() => dec(estrella.id)} />
-                : <button type="button" className="pv-add pv-add-block" onClick={() => add(estrella.id)}><Icon name="plus" size={16} /> Agregar</button>}
-            </div>
-          </div>
-        </div>
-      </section>
-      )}
-
-      {/* Categorías rápidas */}
-      <section className="pv-block">
-        <div className="pv-block-head">
-          <h2 className="pv-block-title">Explora por categoría</h2>
-          <button type="button" className="pv-link" onClick={() => goCat(null)}>Ver todo <Icon name="chevron" size={14} /></button>
-        </div>
-        <div className="pv-cat-grid">
-          {CATEGORIAS.map(c => {
-            const sample = PRODUCTOS.find(p => p.cat === c.id);
-            return (
-              <button type="button" key={c.id} className="pv-cat-card" onClick={() => goCat(c.id)}>
-                {sample ? <ProductImg p={sample} size={44} /> : <BottlePlaceholder type="spirit" size={26} />}
-                <span>{c.nombre}</span>
-              </button>
-            );
-          })}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "16px" }}>
+          {COMBOS.slice(0, 2).map((c, i) => (
+            <ComboCard key={c.id} c={c} featured={i === 0} qty={cart[c.id] || 0}
+              onAdd={() => add(c.id)} onInc={() => inc(c.id)} onDec={() => dec(c.id)} />
+          ))}
         </div>
       </section>
 
-      {/* Combo destacado */}
-      {comboTop && (
-      <section className="pv-block">
-        <div className="pv-block-head">
-          <h2 className="pv-block-title">Combo del momento</h2>
-          <button type="button" className="pv-link" onClick={() => goNav("combos")}>Todos los combos <Icon name="chevron" size={14} /></button>
+      {/* Tira de Garantía y Servicio al Cliente */}
+      <section className="pv-block pv-info-strip" style={{ borderRadius: "20px", marginBottom: "28px" }}>
+        <div className="pv-info-grid">
+          <button type="button" className="pv-info-chip" onClick={() => goNav("info")}>
+            <span className="pv-info-tag">Horario Nocturno</span>
+            <strong>Abiertos hasta las 3:00 a.m.</strong>
+            <span>Viernes, Sábados, Domingos y Festivos</span>
+          </button>
+          <button type="button" className="pv-info-chip" onClick={() => goNav("info")}>
+            <span className="pv-info-tag">Sedes Físicas</span>
+            <strong>3 Sedes en el Atlántico</strong>
+            <span>Santo Tomás y Palmar de Varela</span>
+          </button>
+          <button type="button" className="pv-info-chip" onClick={() => goNav("info")}>
+            <span className="pv-info-tag">Pagos Fáciles</span>
+            <strong>Contra entrega y Transferencia</strong>
+            <span>Nequi · Daviplata · Bancolombia</span>
+          </button>
         </div>
-        <ComboCard c={comboTop} qty={cart[comboTop.id] || 0} featured
-          onAdd={() => add(comboTop.id)} onInc={() => inc(comboTop.id)} onDec={() => dec(comboTop.id)} />
-      </section>
-      )}
-
-      {/* Instagram — carrusel tipo marquesina */}
-      <section className="pv-block pv-ig">
-        <div className="pv-block-head">
-          <span className="pv-eyebrow"><Icon name="instagram" size={13} /> @{CONFIG.instagram}</span>
-          <a className="pv-link" href={CONFIG.instagramUrl} target="_blank" rel="noopener">Seguir <Icon name="chevron" size={14} /></a>
-        </div>
-        <div className="pv-ig-grid">
-          {IG_POSTS.map((post) => <IgPost key={post.id} post={post} />)}
-        </div>
-      </section>
-
-      {/* Tira de info */}
-      <section className="pv-block pv-info-strip">
-        <button type="button" className="pv-info-chip" onClick={() => goNav("info")}>
-          <Icon name="clock" size={18} />
-          <div><strong>Horarios</strong><span>Hasta las 3 a.m. fin de semana</span></div>
-        </button>
-        <button type="button" className="pv-info-chip" onClick={() => goNav("info")}>
-          <Icon name="pin" size={18} />
-          <div><strong>3 sucursales</strong><span>Santo Tomás · Palmar</span></div>
-        </button>
-        <button type="button" className="pv-info-chip" onClick={() => goNav("info")}>
-          <Icon name="card" size={18} />
-          <div><strong>Pagos</strong><span>Nequi · Daviplata · Bancolombia</span></div>
-        </button>
       </section>
     </div>
   );
@@ -164,10 +354,13 @@ function HomeScreen({ estado, cart, add, inc, dec, cardStyle, goNav, goCat }) {
 function CatalogScreen({ cart, add, inc, dec, cardStyle, activeCat, setActiveCat }) {
   const { PRODUCTOS, CATEGORIAS } = window.PAVLOS;
   const [q, setQ] = React.useState("");
+  const [filterMode, setFilterMode] = React.useState("all"); // 'all' | 'promo' | 'stock'
 
   const term = q.trim().toLowerCase();
   const filtered = PRODUCTOS.filter(p => {
-    if (term && !(p.nombre + " " + p.variante).toLowerCase().includes(term)) return false;
+    if (term && !(p.nombre + " " + (p.variante || "") + " " + (p.casa || "")).toLowerCase().includes(term)) return false;
+    if (filterMode === "promo" && !p.promo) return false;
+    if (filterMode === "stock" && p.disponible === false) return false;
     return true;
   });
 
@@ -182,13 +375,46 @@ function CatalogScreen({ cart, add, inc, dec, cardStyle, activeCat, setActiveCat
       <div className="pv-sticky-top">
         <div className="pv-search">
           <Icon name="search" size={18} />
-          <input type="text" value={q} onChange={e => setQ(e.target.value)} placeholder="Buscar whiskey, aguardiente, cerveza…" />
+          <input type="text" value={q} onChange={e => setQ(e.target.value)} placeholder="Buscar whiskey, aguardiente, cerveza, vape…" />
           {q && <button type="button" className="pv-search-clear" onClick={() => setQ("")} aria-label="Limpiar"><Icon name="close" size={16} /></button>}
         </div>
+
+        {/* Barra de Filtros rápidos y contador */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 14px 6px", gap: "8px" }}>
+          <div style={{ display: "flex", gap: "6px" }}>
+            <button
+              type="button"
+              className={"pv-quick-chip" + (filterMode === "all" ? " is-active" : "")}
+              style={{ padding: "4px 10px", fontSize: "0.74rem" }}
+              onClick={() => setFilterMode("all")}>
+              Todos
+            </button>
+            <button
+              type="button"
+              className={"pv-quick-chip" + (filterMode === "promo" ? " is-active" : "")}
+              style={{ padding: "4px 10px", fontSize: "0.74rem" }}
+              onClick={() => setFilterMode("promo")}>
+              En promoción
+            </button>
+            <button
+              type="button"
+              className={"pv-quick-chip" + (filterMode === "stock" ? " is-active" : "")}
+              style={{ padding: "4px 10px", fontSize: "0.74rem" }}
+              onClick={() => setFilterMode("stock")}>
+              Disponibles
+            </button>
+          </div>
+          <span className="pv-count-badge">{filtered.length} {filtered.length === 1 ? "producto" : "productos"}</span>
+        </div>
+
         <div className="pv-chips">
-          <button type="button" className={"pv-chip" + (!activeCat ? " is-active" : "")} onClick={() => setActiveCat(null)}>Todo</button>
+          <button type="button" className={"pv-chip" + (!activeCat ? " is-active" : "")} onClick={() => setActiveCat(null)}>
+            Todo
+          </button>
           {CATEGORIAS.map(c => (
-            <button type="button" key={c.id} className={"pv-chip" + (activeCat === c.id ? " is-active" : "")} onClick={() => setActiveCat(c.id)}>{c.nombre}</button>
+            <button type="button" key={c.id} className={"pv-chip" + (activeCat === c.id ? " is-active" : "")} onClick={() => setActiveCat(c.id)}>
+              {c.nombre}
+            </button>
           ))}
         </div>
       </div>
@@ -198,7 +424,16 @@ function CatalogScreen({ cart, add, inc, dec, cardStyle, activeCat, setActiveCat
           <div className="ks-empty pv-empty">
             <Icon name="search" size={30} />
             <strong>Nada por aquí</strong>
-            <p>No encontramos "{q}". Prueba otra búsqueda.</p>
+            <p>No encontramos "{q}". Prueba otra búsqueda o elimina los filtros.</p>
+            {(q || filterMode !== "all" || activeCat) && (
+              <button
+                type="button"
+                className="ks-button ks-button-secondary"
+                style={{ marginTop: 12 }}
+                onClick={() => { setQ(""); setFilterMode("all"); setActiveCat(null); }}>
+                Restablecer filtros
+              </button>
+            )}
           </div>
         )}
         {cats.map(c => {
@@ -208,7 +443,10 @@ function CatalogScreen({ cart, add, inc, dec, cardStyle, activeCat, setActiveCat
           const casaNames = Object.keys(casas).sort((a, b) => a.localeCompare(b, "es"));
           return (
             <section key={c.id} className="pv-cat-section">
-              <h2 className="pv-cat-title">{c.nombre} <span>{c.items.length}</span></h2>
+              <h2 className="pv-cat-title">
+                <span>{c.nombre}</span>
+                <span>{c.items.length}</span>
+              </h2>
               {casaNames.map(casa => (
                 <div key={casa} className="pv-casa">
                   <h3 className="pv-casa-title"><span className="pv-casa-mark" />{casa}</h3>
@@ -234,7 +472,7 @@ function CombosScreen({ cart, add, inc, dec }) {
   return (
     <div className="pv-screen">
       <div className="pv-page-head">
-        <span className="pv-eyebrow"><Icon name="combo" size={14} /> Promociones</span>
+        <span className="pv-eyebrow">Combos & Promociones</span>
         <h1 className="pv-page-title">Combos armados</h1>
         <p className="pv-page-sub">Listos para la parranda. Botella, mezcladores y hielo en un solo precio.</p>
       </div>
@@ -254,7 +492,7 @@ function InfoScreen({ estado }) {
   return (
     <div className="pv-screen">
       <div className="pv-page-head">
-        <span className="pv-eyebrow"><Icon name="info" size={14} /> El negocio</span>
+        <span className="pv-eyebrow">Información oficial</span>
         <h1 className="pv-page-title">Sucursales e info</h1>
         <div className="pv-page-status"><OpenPill estado={estado} /></div>
       </div>
@@ -262,11 +500,11 @@ function InfoScreen({ estado }) {
       <section className="pv-block">
         <h2 className="pv-block-title">Sucursales</h2>
         <div className="pv-suc-list">
-          {CONFIG.sucursales.map(s => (
+          {CONFIG.sucursales.map((s, idx) => (
             <div key={s.id} className={"pv-suc" + (s.principal ? " is-main" : "")}>
-              <div className="pv-suc-pin"><Icon name="pin" size={18} /></div>
+              <div className="pv-suc-num">{String(idx + 1).padStart(2, "0")}</div>
               <div>
-                <div className="pv-suc-city">{s.ciudad}{s.principal && <span className="pv-suc-badge">Principal</span>}</div>
+                <div className="pv-suc-city">{s.ciudad}{s.principal && <span className="pv-suc-badge">Sede Principal</span>}</div>
                 <div className="pv-suc-dir">{s.dir}</div>
                 {s.nota && <div className="pv-suc-note">{s.nota}</div>}
               </div>
@@ -281,7 +519,7 @@ function InfoScreen({ estado }) {
           {CONFIG.horarios.map((h, i) => (
             <div key={i} className="pv-hour-row"><span>{h.dias}</span><span>{h.rango}</span></div>
           ))}
-          <div className="pv-hour-note"><Icon name="bike" size={16} /> Domicilios mientras estemos abiertos.</div>
+          <div className="pv-hour-note">Domicilios activos durante todo el horario de atención.</div>
         </div>
       </section>
 

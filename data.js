@@ -10,8 +10,8 @@
     instagram: "pavlos.store",
     instagramUrl: "https://instagram.com/pavlos.store",
     // Número de ejemplo — cambiar al real. Formato wa.me: 57 + número sin espacios.
-    whatsapp: "573014490958",
-    whatsappDisplay: "301 449 0958",
+    whatsapp: "573046516089",
+    whatsappDisplay: "304 651 6089",
     domicilio: 6000, // costo de ejemplo
     zonas: ["Santo Tomás", "Palmar de Varela"],
     pagos: ["Nequi", "Daviplata", "Bancolombia", "Llave Bre-b"],
@@ -25,6 +25,35 @@
       { dias: "Lun – Vie", rango: "1:00 p.m. – 1:00 a.m." },
       { dias: "Sáb – Dom", rango: "12:00 p.m. – 3:00 a.m." },
     ],
+    banners: [
+      {
+        id: "b1",
+        tag: "DOMICILIOS FLASH",
+        titulo: "Tu trago helado en tu puerta en minutos",
+        sub: "Cobertura completa en Santo Tomás y Palmar de Varela",
+        cta: "Pedir ahora",
+        action: "catalogo",
+        badge: "20-30 min"
+      },
+      {
+        id: "b2",
+        tag: "COMBOS RUMBEROS",
+        titulo: "Parranda lista con hasta 20% de ahorro",
+        sub: "Botella + Hielo + Mezcladores en una sola orden",
+        cta: "Ver combos",
+        action: "combos",
+        badge: "Ahorro garantizado"
+      },
+      {
+        id: "b3",
+        tag: "100% FRÍO",
+        titulo: "¿Sed de cerveza o refajo helado?",
+        sub: "Águilas, Coronas, Stella y Cola & Pola al clima perfecto",
+        cta: "Ver cervezas",
+        action: "cerveza",
+        badge: "Frías ya"
+      }
+    ],
   };
 
   // Categorías del catálogo (orden de aparición)
@@ -35,13 +64,13 @@
     { id: "tequila", nombre: "Tequila" },
     { id: "ginebra", nombre: "Ginebra" },
     { id: "vodka", nombre: "Vodka" },
-    { id: "aperitivos", nombre: "Aperitivos" },
+    { id: "aperitivos", nombre: "Aperitivos & Cócteles" },
     { id: "vinos", nombre: "Vinos" },
     { id: "cerveza", nombre: "Cerveza" },
     { id: "bebidas", nombre: "Bebidas & Mezcladores" },
-    { id: "vapes", nombre: "Vapes" },
+    { id: "vapes", nombre: "Vapes & Pods" },
     { id: "cigarrillos", nombre: "Cigarrillos" },
-    { id: "mecato", nombre: "Mecato" },
+    { id: "mecato", nombre: "Mecato & Snacks" },
   ];
 
   // img: foto PNG del producto (sobre fondo lacado en la tarjeta)
@@ -51,15 +80,15 @@
     { id: "aguardiente-amarillo-375", casa: "Amarillo de Manzanares", nombre: "Aguardiente Amarillo", variante: "375 ml", cat: "aguardiente", precio: 27900, img: "uploads/lote_imagenes_procesado_1784310337875/aguardiente-amarillo-375.webp" },
     { id: "aguardiente-amarillo-750", casa: "Amarillo de Manzanares", nombre: "Aguardiente Amarillo", variante: "750 ml", cat: "aguardiente", precio: 53900, img: "uploads/lote_imagenes_procesado_1784310337875/aguardiente-amarillo-750.webp", estrella: true, tag: "Estrella" },
     { id: "tetra-litro-amarillo", casa: "Amarillo de Manzanares", nombre: "Tetra Litro Amarillo", variante: "", cat: "aguardiente", precio: 61900, img: "uploads/lote_imagenes_procesado_1784310337875/tetra-litro-amarillo.webp" },
-    { id: "aguardiente-amarillo-1000", casa: "Amarillo de Manzanares", nombre: "Aguardiente Amarillo", variante: "1 L", cat: "aguardiente", precio: 69900, img: "uploads/lote_imagenes_procesado_1784310337875/aguardiente-amarillo-1000.webp" },
+    { id: "aguardiente-amarillo-1000", casa: "Amarillo de Manzanares", nombre: "Aguardiente Amarillo", variante: "1000 ml", cat: "aguardiente", precio: 69900, img: "uploads/lote_imagenes_procesado_1784310337875/aguardiente-amarillo-1000.webp" },
     { id: "aguardiente-amarillo-1500", casa: "Amarillo de Manzanares", nombre: "Aguardiente Amarillo", variante: "1.5 L", cat: "aguardiente", precio: 101900, img: "uploads/lote_imagenes_procesado_1784310337875/aguardiente-amarillo-1500.webp" },
     { id: "antioqueno-verde-375", casa: "Antioqueño", nombre: "Antioqueño Verde", variante: "375 ml", cat: "aguardiente", precio: 25900, img: "uploads/lote_imagenes_procesado_1784310337875/antioqueno-verde-375.webp" },
     { id: "antioqueno-verde-750", casa: "Antioqueño", nombre: "Antioqueño Verde", variante: "750 ml", cat: "aguardiente", precio: 49900, img: "uploads/lote_imagenes_procesado_1784310337875/antioqueno-verde-750.webp", tag: "Más vendido" },
     { id: "antioqueno-azul-750", casa: "Antioqueño", nombre: "Antioqueño Azul", variante: "750 ml", cat: "aguardiente", precio: 55900, img: "uploads/lote_imagenes_procesado_1784310337875/antioqueno-azul-750.webp" },
     { id: "tetrapack-litro-verde", casa: "Antioqueño", nombre: "Tetrapack Litro verde", variante: "", cat: "aguardiente", precio: 61900, img: "uploads/lote_imagenes_procesado_1784310337875/tetrapack-litro-verde.webp" },
-    { id: "antioqueno-verde-1000", casa: "Antioqueño", nombre: "Antioqueño Verde", variante: "1 L", cat: "aguardiente", precio: 64900, img: "uploads/lote_imagenes_procesado_1784310337875/antioqueno-verde-1000.webp" },
+    { id: "antioqueno-verde-1000", casa: "Antioqueño", nombre: "Antioqueño Verde", variante: "1000 ml", cat: "aguardiente", precio: 64900, img: "uploads/lote_imagenes_procesado_1784310337875/antioqueno-verde-1000.webp" },
     { id: "tetrapack-litro-azul", casa: "Antioqueño", nombre: "Tetrapack Litro Azul", variante: "", cat: "aguardiente", precio: 64900, img: "uploads/lote_imagenes_procesado_1784310337875/tetrapack-litro-azul.webp" },
-    { id: "antioqueno-azul-1000", casa: "Antioqueño", nombre: "Antioqueño Azul", variante: "1 L", cat: "aguardiente", precio: 72900, img: "uploads/lote_imagenes_procesado_1784310337875/antioqueno-azul-1000.webp" },
+    { id: "antioqueno-azul-1000", casa: "Antioqueño", nombre: "Antioqueño Azul", variante: "1000 ml", cat: "aguardiente", precio: 72900, img: "uploads/lote_imagenes_procesado_1784310337875/antioqueno-azul-1000.webp" },
     { id: "antioqueno-verde-1750", casa: "Antioqueño", nombre: "Antioqueño Verde", variante: "1.75 L", cat: "aguardiente", precio: 106900, img: "uploads/lote_imagenes_procesado_1784310337875/antioqueno-verde-1750.webp" },
     { id: "antioqueno-azul-1750", casa: "Antioqueño", nombre: "Antioqueño Azul", variante: "1.75 L", cat: "aguardiente", precio: 138900, img: "uploads/lote_imagenes_procesado_1784310337875/antioqueno-azul-1750.webp" },
     { id: "aguardiente-real-750", casa: "Real", nombre: "Aguardiente Real", variante: "750 ml", cat: "aguardiente", precio: 49900, img: "uploads/lote_imagenes_procesado_1784310337875/aguardiente-real-750.webp" },
@@ -88,8 +117,8 @@
     { id: "buchanans-12-750", casa: "Buchanan's", nombre: "Buchanans 12", variante: "750 ml", cat: "whiskey", precio: 177900, img: "uploads/lote_imagenes_procesado_1784310337875/buchanans-12-750.webp", tag: "Más vendido" },
     { id: "buchanans-master-750", casa: "Buchanan's", nombre: "Buchanans Master", variante: "750 ml", cat: "whiskey", precio: 203900, img: "uploads/lote_imagenes_procesado_1784310337875/buchanans-master-750.webp" },
     { id: "buchanans-two-souls-750", casa: "Buchanan's", nombre: "Buchanans Two Souls", variante: "750 ml", cat: "whiskey", precio: 204900, img: "uploads/lote_imagenes_procesado_1784310337875/buchanans-two-souls-750.webp" },
-    { id: "buchanans-12-1000", casa: "Buchanan's", nombre: "Buchanans 12", variante: "1 L", cat: "whiskey", precio: 224900, img: "uploads/lote_imagenes_procesado_1784310337875/buchanans-12-1000.webp" },
-    { id: "buchanans-master-1000", casa: "Buchanan's", nombre: "Buchanans Master", variante: "1 L", cat: "whiskey", precio: 246900, img: "uploads/lote_imagenes_procesado_1784310337875/buchanans-master-1000.webp" },
+    { id: "buchanans-12-1000", casa: "Buchanan's", nombre: "Buchanans 12", variante: "1000 ml", cat: "whiskey", precio: 224900, img: "uploads/lote_imagenes_procesado_1784310337875/buchanans-12-1000.webp" },
+    { id: "buchanans-master-1000", casa: "Buchanan's", nombre: "Buchanans Master", variante: "1000 ml", cat: "whiskey", precio: 246900, img: "uploads/lote_imagenes_procesado_1784310337875/buchanans-master-1000.webp" },
     { id: "buchanans-18", casa: "Buchanan's", nombre: "Buchanans 18", variante: "", cat: "whiskey", precio: 406900, img: "uploads/lote_imagenes_procesado_1784310337875/buchanans-18.webp" },
     { id: "chivas-regal-12-700", casa: "Chivas Regal", nombre: "Chivas Regal 12", variante: "700 ml", cat: "whiskey", precio: 144900, img: "uploads/lote_imagenes_procesado_1784310337875/chivas-regal-12-700.webp" },
     { id: "whisky-glenfiddich-12-750", casa: "Glenfiddich", nombre: "Whisky Glenfiddich 12", variante: "750 ml", cat: "whiskey", precio: 209900, img: "uploads/lote_imagenes_procesado_1784310337875/whisky-glenfiddich-12-750.webp" },
@@ -101,16 +130,16 @@
     { id: "jhonnie-walker-red-375", casa: "Johnnie Walker", nombre: "Johnnie Walker Red", variante: "375 ml", cat: "whiskey", precio: 47900, img: "uploads/lote_imagenes_procesado_1784310337875/jhonnie-walker-red-375.webp" },
     { id: "jhonnie-walker-red-label-750", casa: "Johnnie Walker", nombre: "Johnnie Walker Red Label", variante: "750 ml", cat: "whiskey", precio: 74900, img: "uploads/lote_imagenes_procesado_1784310337875/jhonnie-walker-red-label-750.webp" },
     { id: "jhonnie-walker-black-375", casa: "Johnnie Walker", nombre: "Johnnie Walker Black", variante: "375 ml", cat: "whiskey", precio: 84900, img: "uploads/lote_imagenes_procesado_1784310337875/jhonnie-walker-black-375.webp" },
-    { id: "jhonnie-walker-red-1000", casa: "Johnnie Walker", nombre: "Johnnie Walker Red", variante: "1 L", cat: "whiskey", precio: 94900, img: "uploads/lote_imagenes_procesado_1784310337875/jhonnie-walker-red-1000.webp" },
+    { id: "jhonnie-walker-red-1000", casa: "Johnnie Walker", nombre: "Johnnie Walker Red", variante: "1000 ml", cat: "whiskey", precio: 94900, img: "uploads/lote_imagenes_procesado_1784310337875/jhonnie-walker-red-1000.webp" },
     { id: "jhonnie-walker-black-label-700", casa: "Johnnie Walker", nombre: "Johnnie Walker Black Label", variante: "700 ml", cat: "whiskey", precio: 154900, img: "uploads/lote_imagenes_procesado_1784310337875/jhonnie-walker-black-label-700.webp" },
     { id: "jhonnie-walker-double-black-700", casa: "Johnnie Walker", nombre: "Johnnie Walker Double Black", variante: "700 ml", cat: "whiskey", precio: 189900, img: "uploads/lote_imagenes_procesado_1784310337875/jhonnie-walker-double-black-700.webp" },
-    { id: "jhonnie-walker-black-1000", casa: "Johnnie Walker", nombre: "Johnnie Walker Black", variante: "1 L", cat: "whiskey", precio: 194900, img: "uploads/lote_imagenes_procesado_1784310337875/jhonnie-walker-black-1000.webp" },
+    { id: "jhonnie-walker-black-1000", casa: "Johnnie Walker", nombre: "Johnnie Walker Black", variante: "1000 ml", cat: "whiskey", precio: 194900, img: "uploads/lote_imagenes_procesado_1784310337875/jhonnie-walker-black-1000.webp" },
     { id: "whisky-macallan-double-cask-12-700", casa: "Macallan", nombre: "Whisky Macallan Double Cask 12", variante: "700 ml", cat: "whiskey", precio: 469900, img: "uploads/lote_imagenes_procesado_1784310337875/whisky-macallan-double-cask-12-700.webp" },
     { id: "whisky-macallan-triple-cask-12-700", casa: "Macallan", nombre: "Whisky Macallan Triple Cask 12", variante: "700 ml", cat: "whiskey", precio: 469900, img: "uploads/lote_imagenes_procesado_1784310337875/whisky-macallan-triple-cask-12-700.webp" },
     { id: "whisky-macallan-sherry-oak-12-750", casa: "Macallan", nombre: "Whisky Macallan Sherry OAK 12", variante: "750 ml", cat: "whiskey", precio: 519900, img: "uploads/lote_imagenes_procesado_1784310337875/whisky-macallan-sherry-oak-12-750.webp" },
     { id: "old-parr-12-500", casa: "Old Parr", nombre: "Old Parr 12", variante: "500 ml", cat: "whiskey", precio: 104900, img: "uploads/lote_imagenes_procesado_1784310337875/old-parr-12-500.webp" },
     { id: "old-parr-12-750", casa: "Old Parr", nombre: "Old Parr 12", variante: "750 ml", cat: "whiskey", precio: 154900, img: "uploads/lote_imagenes_procesado_1784310337875/old-parr-12-750.webp" },
-    { id: "old-parr-12-1000", casa: "Old Parr", nombre: "Old Parr 12", variante: "1 L", cat: "whiskey", precio: 194900, img: "uploads/lote_imagenes_procesado_1784310337875/old-parr-12-1000.webp" },
+    { id: "old-parr-12-1000", casa: "Old Parr", nombre: "Old Parr 12", variante: "1000 ml", cat: "whiskey", precio: 194900, img: "uploads/lote_imagenes_procesado_1784310337875/old-parr-12-1000.webp" },
     { id: "something-special", casa: "Something Special", nombre: "Something Special", variante: "", cat: "whiskey", precio: 74900, img: "uploads/lote_imagenes_procesado_1784310337875/something-special.webp" },
     { id: "whisky-the-famous-grouse-700", casa: "The Famous Grouse", nombre: "Whisky The Famous Grouse", variante: "700 ml", cat: "whiskey", precio: 79900, img: "uploads/lote_imagenes_procesado_1784310337875/whisky-the-famous-grouse-700.webp" },
     { id: "the-glenlivet-12-700", casa: "The Glenlivet", nombre: "The Glenlivet 12", variante: "700 ml", cat: "whiskey", precio: 169900, img: "uploads/lote_imagenes_procesado_1784310337875/the-glenlivet-12-700.webp" },
@@ -142,8 +171,7 @@
     { id: "four-loko-gold", casa: "Four Loko", nombre: "Four Loko Gold", variante: "", cat: "aperitivos", precio: 20000, img: "uploads/lote_imagenes_procesado_1784310337875/four-loko-gold.webp" },
     { id: "four-loko-green-apple", casa: "Four Loko", nombre: "Four Loko green apple", variante: "", cat: "aperitivos", precio: 20000, img: "uploads/lote_imagenes_procesado_1784310337875/four-loko-green-apple.webp" },
     { id: "four-loko-lulo", casa: "Four Loko", nombre: "Four Loko Lulo", variante: "", cat: "aperitivos", precio: 20000, img: "uploads/lote_imagenes_procesado_1784310337875/four-loko-lulo.webp" },
-    { id: "four-loko-morado", casa: "Four Loko", nombre: "Four Loko Morado", variante: "", cat: "aperitivos", precio: 20000, img: "uploads/lote_imagenes_procesado_1784310337875/four-loko-morado.webp" },
-    { id: "margarita", casa: "Margarita", nombre: "Margarita", variante: "", cat: "aperitivos", precio: 23000, img: "uploads/lote_imagenes_procesado_1784310337875/margarita.webp" },
+    { id: "margarita", casa: "Cócteles Listos", nombre: "Cóctel Margarita", variante: "Botella 750 ml", cat: "aperitivos", precio: 23000, img: "uploads/lote_imagenes_procesado_1784310337875/margarita.webp" },
     // ===== VINOS =====
     { id: "vino-blanco-terra-vega-sauvignon", casa: "Terra Vega", nombre: "Vino Blanco Terra Vega Sauvignon", variante: "", cat: "vinos", precio: 49900, img: "uploads/lote_imagenes_procesado_1784310337875/vino-blanco-terra-vega-sauvignon.webp" },
     { id: "vino-tinto-terra-vega-sauvignon", casa: "Terra Vega", nombre: "Vino Tinto Terra Vega Sauvignon", variante: "", cat: "vinos", precio: 49900, img: "uploads/lote_imagenes_procesado_1784310337875/vino-tinto-terra-vega-sauvignon.webp" },
@@ -152,12 +180,12 @@
     { id: "aguila-light", casa: "Águila", nombre: "Aguila Light", variante: "", cat: "cerveza", precio: 3500, img: "uploads/lote_imagenes_procesado_1784310337875/aguila-light.webp" },
     { id: "aguila-negra", casa: "Águila", nombre: "Aguila Negra", variante: "", cat: "cerveza", precio: 3500, img: "uploads/lote_imagenes_procesado_1784310337875/aguila-negra.webp", tag: "Más vendido" },
     { id: "aguila-negra-lata", casa: "Águila", nombre: "Aguila Negra Lata", variante: "", cat: "cerveza", precio: 3500, img: "uploads/lote_imagenes_procesado_1784310337875/aguila-negra-lata.webp" },
-    { id: "bretana", casa: "Bretaña", nombre: "Bretaña", variante: "", cat: "cerveza", precio: 3000, img: "uploads/lote_imagenes_procesado_1784310337875/bretana.webp" },
+    { id: "bretana", casa: "Bretaña", nombre: "Bretaña", variante: "Sifón / Lata", cat: "bebidas", precio: 3000, img: "uploads/lote_imagenes_procesado_1784310337875/bretana.webp" },
     { id: "budweiser-botella-250", casa: "Budweiser", nombre: "Budweiser Botella", variante: "250 ml", cat: "cerveza", precio: 3000, img: "uploads/lote_imagenes_procesado_1784310337875/budweiser-botella-250.webp" },
     { id: "budweiser-lata", casa: "Budweiser", nombre: "Budweiser Lata", variante: "", cat: "cerveza", precio: 3000, img: "uploads/lote_imagenes_procesado_1784310337875/budweiser-lata.webp" },
     { id: "club-colombia-dorada-botella-330", casa: "Club Colombia", nombre: "Club Colombia Dorada Botella", variante: "330 ml", cat: "cerveza", precio: 4000, img: "uploads/lote_imagenes_procesado_1784310337875/club-colombia-dorada-botella-330.webp" },
     { id: "club-colombia-trigo-330", casa: "Club Colombia", nombre: "Club Colombia Trigo", variante: "330 ml", cat: "cerveza", precio: 4000, img: "uploads/lote_imagenes_procesado_1784310337875/club-colombia-trigo-330.webp" },
-    { id: "cola-y-pola", casa: "Cola & Pola", nombre: "Cola & Pola", variante: "", cat: "cerveza", precio: 4000, img: "uploads/lote_imagenes_procesado_1784310337875/cola-y-pola.webp" },
+    { id: "cola-y-pola", casa: "Cola & Pola", nombre: "Cola & Pola", variante: "Lata 330 ml", cat: "cerveza", precio: 4000, img: "uploads/lote_imagenes_procesado_1784310337875/cola-y-pola.webp" },
     { id: "corona-botella-cero-330", casa: "Corona", nombre: "Corona Botella Cero", variante: "330 ml", cat: "cerveza", precio: 4500, img: "uploads/lote_imagenes_procesado_1784310337875/corona-botella-cero-330.webp" },
     { id: "corona-botella-330", casa: "Corona", nombre: "Corona Botella", variante: "330 ml", cat: "cerveza", precio: 4700, img: "uploads/lote_imagenes_procesado_1784310337875/corona-botella-330.webp" },
     { id: "coronita-botella-210", casa: "Coronita", nombre: "Coronita Botella", variante: "210 ml", cat: "cerveza", precio: 4000, img: "uploads/lote_imagenes_procesado_1784310337875/coronita-botella-210.webp" },
@@ -167,7 +195,7 @@
     { id: "cerveza-michelob", casa: "Michelob", nombre: "Cerveza Michelob", variante: "", cat: "cerveza", precio: 3300, img: "uploads/lote_imagenes_procesado_1784310337875/cerveza-michelob.webp" },
     { id: "modelo-especial-rubia", casa: "Modelo", nombre: "Modelo Especial Rubia", variante: "", cat: "cerveza", precio: 6500, img: "uploads/lote_imagenes_procesado_1784310337875/modelo-especial-rubia.webp" },
     { id: "poker", casa: "Poker", nombre: "Poker", variante: "", cat: "cerveza", precio: 3500, img: "uploads/lote_imagenes_procesado_1784310337875/poker.webp", tag: "Más vendido" },
-    { id: "pony-malta", casa: "Pony Malta", nombre: "Pony Malta", variante: "", cat: "cerveza", precio: 3000, img: "uploads/lote_imagenes_procesado_1784310337875/pony-malta.webp" },
+    { id: "pony-malta", casa: "Pony Malta", nombre: "Pony Malta", variante: "330 ml", cat: "bebidas", precio: 3000, img: "uploads/lote_imagenes_procesado_1784310337875/pony-malta.webp" },
     { id: "redds-lata", casa: "Redd's", nombre: "Redds Lata", variante: "", cat: "cerveza", precio: 3500, img: "uploads/lote_imagenes_procesado_1784310337875/redds-lata.webp" },
     { id: "redds-lata-rose", casa: "Redd's", nombre: "Redds Lata Rose", variante: "", cat: "cerveza", precio: 3500, img: "uploads/lote_imagenes_procesado_1784310337875/redds-lata-rose.webp" },
     { id: "stella-artois-lata", casa: "Stella Artois", nombre: "Stella Artois Lata", variante: "", cat: "cerveza", precio: 4500, img: "uploads/lote_imagenes_procesado_1784310337875/stella-artois-lata.webp" },
@@ -219,14 +247,14 @@
     { id: "large-peach-lime-800-puff", casa: "Large", nombre: "Large Peach Lime 800pff", variante: "", cat: "vapes", precio: 35000, img: "uploads/lote_imagenes_procesado_1784310337875/large-peach-lime-800-puff.webp" },
     { id: "large-sandia-1300-puff", casa: "Large", nombre: "Large Sandia 1300 puff", variante: "", cat: "vapes", precio: 35000, img: "uploads/lote_imagenes_procesado_1784310337875/large-sandia-1300-puff.webp" },
     { id: "large-sour-apple-1300-puff", casa: "Large", nombre: "Large Sour Apple 1300pff", variante: "", cat: "vapes", precio: 35000, img: "uploads/lote_imagenes_procesado_1784310337875/large-sour-apple-1300-puff.webp" },
-    { id: "like-apple", casa: "Like", nombre: "Like apple", variante: "", cat: "vapes", precio: 5500, img: "uploads/lote_imagenes_procesado_1784310337875/like-apple.webp" },
-    { id: "like-blueberry", casa: "Like", nombre: "Like Blueberry", variante: "", cat: "vapes", precio: 5500, img: "uploads/lote_imagenes_procesado_1784310337875/like-blueberry.webp" },
-    { id: "like-fresa", casa: "Like", nombre: "Like Fresa", variante: "", cat: "vapes", precio: 5500, img: "uploads/lote_imagenes_procesado_1784310337875/like-fresa.webp" },
-    { id: "like-limon", casa: "Like", nombre: "Like Limon", variante: "", cat: "vapes", precio: 5500, img: "uploads/lote_imagenes_procesado_1784310337875/like-limon.webp" },
-    { id: "like-mango", casa: "Like", nombre: "Like Mango", variante: "", cat: "vapes", precio: 5500, img: "uploads/lote_imagenes_procesado_1784310337875/like-mango.webp" },
-    { id: "los-quates-mango", casa: "Los Cuates", nombre: "Los Quate Mango", variante: "", cat: "vapes", precio: 6000, img: "uploads/lote_imagenes_procesado_1784310337875/los-quates-mango.webp" },
-    { id: "los-quates-fresa", casa: "Los Cuates", nombre: "Los Quates Fresa", variante: "", cat: "vapes", precio: 6000, img: "uploads/lote_imagenes_procesado_1784310337875/los-quates-fresa.webp" },
-    { id: "los-quates-limon", casa: "Los Cuates", nombre: "Los Quates Limon", variante: "", cat: "vapes", precio: 6000, img: "uploads/lote_imagenes_procesado_1784310337875/los-quates-limon.webp" },
+    { id: "like-apple", casa: "Like Cocktail", nombre: "Like Apple", variante: "300 ml", cat: "aperitivos", precio: 5500, img: "uploads/lote_imagenes_procesado_1784310337875/like-apple.webp" },
+    { id: "like-blueberry", casa: "Like Cocktail", nombre: "Like Blueberry", variante: "300 ml", cat: "aperitivos", precio: 5500, img: "uploads/lote_imagenes_procesado_1784310337875/like-blueberry.webp" },
+    { id: "like-limon", casa: "Like Cocktail", nombre: "Like Limón", variante: "300 ml", cat: "aperitivos", precio: 5500, img: "uploads/lote_imagenes_procesado_1784310337875/like-limon.webp" },
+    { id: "like-mango", casa: "Like Cocktail", nombre: "Like Mango", variante: "300 ml", cat: "aperitivos", precio: 5500, img: "uploads/lote_imagenes_procesado_1784310337875/like-mango.webp" },
+    { id: "like-fresa", casa: "Like Cocktail", nombre: "Like Fresa", variante: "300 ml", cat: "aperitivos", precio: 5500, img: "uploads/lote_imagenes_procesado_1784310337875/like-fresa.webp" },
+    { id: "los-quates-mango", casa: "Los Cuates", nombre: "Los Cuates Mango", variante: "Pasabocas", cat: "mecato", precio: 6000, img: "uploads/lote_imagenes_procesado_1784310337875/los-quates-mango.webp" },
+    { id: "los-quates-fresa", casa: "Los Cuates", nombre: "Los Cuates Fresa", variante: "Pasabocas", cat: "mecato", precio: 6000, img: "uploads/lote_imagenes_procesado_1784310337875/los-quates-fresa.webp" },
+    { id: "los-quates-limon", casa: "Los Cuates", nombre: "Los Cuates Limón", variante: "Pasabocas", cat: "mecato", precio: 6000, img: "uploads/lote_imagenes_procesado_1784310337875/los-quates-limon.webp" },
     { id: "velo-nicotina", casa: "Velo", nombre: "Velo Nicotina", variante: "", cat: "vapes", precio: 15000, img: "uploads/lote_imagenes_procesado_1784310337875/velo-nicotina.webp" },
     { id: "vuse-go-1000-banana", casa: "Vuse", nombre: "Vuse Go 1000 Banana", variante: "", cat: "vapes", precio: 30000, img: "uploads/lote_imagenes_procesado_1784310337875/vuse-go-1000-banana.webp" },
     { id: "vuse-go-1000-grape-ice", casa: "Vuse", nombre: "Vuse Go 1000 Grape Ice", variante: "", cat: "vapes", precio: 30000, img: "uploads/lote_imagenes_procesado_1784310337875/vuse-go-1000-grape-ice.webp" },
@@ -242,7 +270,7 @@
     { id: "vuse-ice-uva", casa: "Vuse", nombre: "Vuse Ice Uva", variante: "", cat: "vapes", precio: 30000, img: "uploads/lote_imagenes_procesado_1784310337875/vuse-ice-uva.webp" },
     { id: "dispositivo-vuse-epod-2", casa: "Vuse", nombre: "Dispositivo Vuse ePod 2", variante: "", cat: "vapes", precio: 32000, img: "uploads/lote_imagenes_procesado_1784310337875/dispositivo-vuse-epod-2.webp" },
     // ===== CIGARRILLOS =====
-    { id: "mechera", casa: "Encendedores", nombre: "Mechera", variante: "", cat: "cigarrillos", precio: 2000, img: "uploads/lote_imagenes_procesado_1784310337875/mechera.webp" },
+    { id: "mechera", casa: "Encendedores", nombre: "Encendedor Mechera", variante: "Unidad individual", cat: "cigarrillos", precio: 2000, img: "uploads/lote_imagenes_procesado_1784310337875/mechera.webp" },
     { id: "lucky-azul", casa: "Lucky Strike", nombre: "Lucky Azul", variante: "", cat: "cigarrillos", precio: 10000, img: "uploads/lote_imagenes_procesado_1784310337875/lucky-azul.webp" },
     { id: "lucky-celeste", casa: "Lucky Strike", nombre: "Lucky celeste", variante: "", cat: "cigarrillos", precio: 10000, img: "uploads/lote_imagenes_procesado_1784310337875/lucky-celeste.webp" },
     { id: "lucky-sandia", casa: "Lucky Strike", nombre: "Lucky Sandia", variante: "", cat: "cigarrillos", precio: 10000, img: "uploads/lote_imagenes_procesado_1784310337875/lucky-sandia.webp" },
@@ -273,6 +301,7 @@
       desc: "Para arrancar la noche sin pensarlo.",
       items: ["Aguardiente Amarillo 750 ml", "2 gaseosas", "Bolsa de hielo"],
       precio: 65900, antes: 73900, tag: "El más pedido",
+      img: "uploads/lote_imagenes_procesado_1784310337875/combo-parranda.webp",
     },
     {
       id: "combo-whiskeria",
@@ -280,6 +309,7 @@
       desc: "Old Parr y todo listo para servir.",
       items: ["Old Parr 12 750 ml", "4 gaseosas", "Bolsa de hielo"],
       precio: 172900, antes: 186900, tag: "Premium",
+      img: "uploads/lote_imagenes_procesado_1784310337875/combo-whiskeria.webp",
     },
     {
       id: "combo-ron-noche",
@@ -287,13 +317,15 @@
       desc: "Ron Medellín bien acompañado.",
       items: ["Ron Medellin 750 ml", "2 Coca-Cola", "Bolsa de hielo"],
       precio: 69900, antes: 77900,
+      img: "uploads/lote_imagenes_procesado_1784310337875/combo-ron-noche.webp",
     },
     {
       id: "combo-cervecero",
       nombre: "Combo Cervecero",
       desc: "Doce frías y hielo, listo el plan.",
-      items: ["12 Águila Negra", "Bolsa de hielo"],
-      precio: 46900, antes: 52000,
+      items: ["12 Águila Negra", "Bolsa de hielo", "Doritos"],
+      precio: 46900, antes: 52000, tag: "Frías al instante",
+      img: "uploads/lote_imagenes_procesado_1784310337875/combo-cervecero.webp",
     },
     {
       id: "combo-express",
@@ -301,13 +333,15 @@
       desc: "Para dos, rápido y al grano.",
       items: ["Antioqueño Verde 375 ml", "Gaseosa", "Bolsa de hielo"],
       precio: 38900, antes: 43900,
+      img: "uploads/lote_imagenes_procesado_1784310337875/combo-express.webp",
     },
     {
       id: "combo-brindis",
       nombre: "Combo Brindis",
       desc: "Dos tintos para la ocasión.",
-      items: ["2 Vino Tinto Terra Vega 750 ml"],
+      items: ["Vino Tinto Terra Vega", "Vino Blanco Terra Vega"],
       precio: 92900, antes: 99800,
+      img: "uploads/lote_imagenes_procesado_1784310337875/combo-brindis.webp",
     },
   ];
 
@@ -368,7 +402,7 @@
     }));
     const combos = PAVLOS.COMBOS.filter(c => c.antes).map(c => ({
       kind: "combo", id: c.id, nombre: c.nombre, sub: c.items.length + " productos",
-      precio: c.precio, antes: c.antes,
+      precio: c.precio, antes: c.antes, img: c.img,
     }));
     // intercalar botella, combo, botella, combo…
     const out = []; let i = 0, j = 0;
@@ -388,7 +422,7 @@
      publicar (la API de abajo ya queda lista para ese cambio).
      ========================================================================== */
   const DEFAULTS = { CONFIG, CATEGORIAS, PRODUCTOS, COMBOS, IG_POSTS };
-  const STORE_KEY = "pv_catalog_v2";
+  const STORE_KEY = "pv_catalog_v5";
   const clone = (o) => JSON.parse(JSON.stringify(o));
 
   function loadCatalog() {
@@ -396,13 +430,24 @@
       const raw = localStorage.getItem(STORE_KEY);
       if (raw) {
         const s = JSON.parse(raw);
-        return {
+        const data = {
           CONFIG: Object.assign(clone(DEFAULTS.CONFIG), s.CONFIG || {}),
           CATEGORIAS: s.CATEGORIAS || clone(DEFAULTS.CATEGORIAS),
           PRODUCTOS: s.PRODUCTOS || clone(DEFAULTS.PRODUCTOS),
           COMBOS: s.COMBOS || clone(DEFAULTS.COMBOS),
           IG_POSTS: s.IG_POSTS || clone(DEFAULTS.IG_POSTS),
         };
+        if (Array.isArray(data.PRODUCTOS)) {
+          data.PRODUCTOS.forEach(p => {
+            if (p && p.id && p.id.startsWith("like-")) {
+              p.casa = "Like Cocktail";
+            }
+            if (p && (p.variante === "1 L" || p.variante === "1L" || p.variante === "1 l")) {
+              p.variante = "1000 ml";
+            }
+          });
+        }
+        return data;
       }
     } catch (e) { console.warn("Catálogo guardado inválido; usando valores por defecto.", e); }
     return clone(DEFAULTS);
@@ -432,39 +477,171 @@
     return id;
   }
 
+  /* ==========================================================================
+     FIREBASE FIRESTORE SYNC — SINCRONIZACIÓN EN LA NUBE EN TIEMPO REAL
+     Permite que cualquier cambio hecho en el panel admin (precios, stock, promos)
+     se refleje al instante en TODOS los dispositivos y clientes sin redesplegar.
+     ========================================================================== */
+  const FIREBASE_CONFIG_KEY = "pv_firebase_config";
+  let _firestore = null;
+  let _cloudSubscribed = false;
+
+  // Configuración predeterminada o guardada por el dueño
+  function getFirebaseConfig() {
+    try {
+      const stored = localStorage.getItem(FIREBASE_CONFIG_KEY);
+      if (stored) return JSON.parse(stored);
+    } catch (e) {}
+    return null;
+  }
+
+  function initFirestore(customConfig) {
+    if (typeof firebase === "undefined") {
+      console.info("[Pavlo's Cloud] Firebase SDK no cargado aún.");
+      return false;
+    }
+    const cfg = customConfig || getFirebaseConfig();
+    if (!cfg || !cfg.projectId) {
+      console.info("[Pavlo's Cloud] Firebase no configurado aún. Operando en modo local.");
+      return false;
+    }
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(cfg);
+      }
+      _firestore = firebase.firestore();
+      console.info("[Pavlo's Cloud] Firestore inicializado para proyecto:", cfg.projectId);
+      subscribeFirestore();
+      return true;
+    } catch (err) {
+      console.warn("[Pavlo's Cloud] Error al inicializar Firestore:", err);
+      return false;
+    }
+  }
+
+  function subscribeFirestore() {
+    if (!_firestore || _cloudSubscribed) return;
+    _cloudSubscribed = true;
+    try {
+      _firestore.collection("pavlos_store").doc("catalog")
+        .onSnapshot((doc) => {
+          if (doc.exists) {
+            const data = doc.data();
+            console.info("[Pavlo's Cloud] 🟢 Catálogo en vivo recibido desde Firestore");
+            if (data.PRODUCTOS) PAVLOS.PRODUCTOS = data.PRODUCTOS;
+            if (data.COMBOS) PAVLOS.COMBOS = data.COMBOS;
+            if (data.CONFIG) PAVLOS.CONFIG = Object.assign(clone(DEFAULTS.CONFIG), data.CONFIG);
+            if (data.CATEGORIAS) PAVLOS.CATEGORIAS = data.CATEGORIAS;
+            if (data.IG_POSTS) PAVLOS.IG_POSTS = data.IG_POSTS;
+            persist();
+            notify();
+          } else {
+            console.info("[Pavlo's Cloud] El documento aún no existe en Firestore. Listo para sembrar.");
+          }
+        }, (err) => {
+          console.warn("[Pavlo's Cloud] Error en listener de Firestore:", err);
+        });
+    } catch (e) {
+      console.warn("[Pavlo's Cloud] No se pudo conectar listener de Firestore:", e);
+    }
+  }
+
+  async function pushToFirestore() {
+    if (!_firestore) return false;
+    try {
+      await _firestore.collection("pavlos_store").doc("catalog").set({
+        CONFIG: PAVLOS.CONFIG,
+        CATEGORIAS: PAVLOS.CATEGORIAS,
+        PRODUCTOS: PAVLOS.PRODUCTOS,
+        COMBOS: PAVLOS.COMBOS,
+        IG_POSTS: PAVLOS.IG_POSTS,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+      console.info("[Pavlo's Cloud] ✅ Cambios sincronizados con éxito a Firestore.");
+      return true;
+    } catch (err) {
+      console.error("[Pavlo's Cloud] Error al guardar en Firestore:", err);
+      return false;
+    }
+  }
+
+  const cloud = {
+    init: initFirestore,
+    save: pushToFirestore,
+    isConnected: () => !!_firestore,
+    getConfig: getFirebaseConfig,
+    setConfig: (cfg) => {
+      localStorage.setItem(FIREBASE_CONFIG_KEY, JSON.stringify(cfg));
+      return initFirestore(cfg);
+    },
+    pushAllToCloud: async () => {
+      if (!_firestore) return false;
+      return await pushToFirestore();
+    }
+  };
+
   const admin = {
     // --- Productos ---
     updateProducto(id, patch) {
       const p = PAVLOS.PRODUCTOS.find(x => x.id === id);
-      if (p) { Object.assign(p, patch); persist(); notify(); }
+      if (p) {
+        Object.assign(p, patch);
+        persist();
+        notify();
+        cloud.save();
+      }
     },
     addProducto(obj) {
       const id = obj.id || genId("p", obj.nombre);
       PAVLOS.PRODUCTOS = [{ ...obj, id }, ...PAVLOS.PRODUCTOS];
-      persist(); notify(); return id;
+      persist();
+      notify();
+      cloud.save();
+      return id;
     },
     removeProducto(id) {
       PAVLOS.PRODUCTOS = PAVLOS.PRODUCTOS.filter(x => x.id !== id);
-      persist(); notify();
+      persist();
+      notify();
+      cloud.save();
     },
     // --- Combos ---
     updateCombo(id, patch) {
       const c = PAVLOS.COMBOS.find(x => x.id === id);
-      if (c) { Object.assign(c, patch); persist(); notify(); }
+      if (c) {
+        Object.assign(c, patch);
+        persist();
+        notify();
+        cloud.save();
+      }
     },
     addCombo(obj) {
       const id = obj.id || genId("combo", obj.nombre);
       PAVLOS.COMBOS = [{ ...obj, id }, ...PAVLOS.COMBOS];
-      persist(); notify(); return id;
+      persist();
+      notify();
+      cloud.save();
+      return id;
     },
     removeCombo(id) {
       PAVLOS.COMBOS = PAVLOS.COMBOS.filter(x => x.id !== id);
-      persist(); notify();
+      persist();
+      notify();
+      cloud.save();
     },
-    // --- Instagram (reels/posts previsualizados) ---
+    // --- Banners ---
+    updateBanners(banners) {
+      PAVLOS.CONFIG.banners = banners;
+      persist();
+      notify();
+      cloud.save();
+    },
+    // --- Instagram ---
     setReels(urls) {
       PAVLOS.IG_POSTS = urls.map((url, i) => ({ id: "ig" + (i + 1), url: url.trim() })).filter(r => r.url);
-      persist(); notify();
+      persist();
+      notify();
+      cloud.save();
     },
     // --- Mantenimiento ---
     reset() {
@@ -473,6 +650,7 @@
       PAVLOS.CONFIG = c.CONFIG; PAVLOS.CATEGORIAS = c.CATEGORIAS;
       PAVLOS.PRODUCTOS = c.PRODUCTOS; PAVLOS.COMBOS = c.COMBOS; PAVLOS.IG_POSTS = c.IG_POSTS;
       notify();
+      cloud.save();
     },
     exportJSON() {
       return JSON.stringify({
@@ -487,10 +665,13 @@
       if (s.IG_POSTS) PAVLOS.IG_POSTS = s.IG_POSTS;
       if (s.CONFIG) PAVLOS.CONFIG = Object.assign(clone(DEFAULTS.CONFIG), s.CONFIG);
       if (s.CATEGORIAS) PAVLOS.CATEGORIAS = s.CATEGORIAS;
-      persist(); notify();
+      persist();
+      notify();
+      cloud.save();
     },
     subscribe(fn) { subs.add(fn); return () => subs.delete(fn); },
     hasOverrides() { try { return !!localStorage.getItem(STORE_KEY); } catch (e) { return false; } },
+    cloud,
   };
 
   const _init = loadCatalog();
@@ -500,6 +681,14 @@
     IG_POSTS: _init.IG_POSTS,
     pesos, estadoApertura, minsToHora, getPromos,
     admin,
+    cloud,
   };
   window.PAVLOS = PAVLOS;
+
+  // Auto-inicializar Firestore en segundo plano si está configurado
+  if (typeof window !== "undefined") {
+    setTimeout(() => {
+      try { cloud.init(); } catch (e) {}
+    }, 150);
+  }
 })();

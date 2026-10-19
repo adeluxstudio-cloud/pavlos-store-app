@@ -3,6 +3,10 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.log
-
-.vercel
+.playwright-cli/
+scraps/
+scratch/
+scratch_*
+dislicores-*.png
+.thumbnail
 .env*

@@ -21,6 +21,7 @@ function Icon({ name, size = 22, stroke = 1.6, style }) {
     clock: <><circle {...p} cx="12" cy="12" r="9" /><path {...p} d="M12 7v5l3.5 2" /></>,
     pin: <><path {...p} d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z" /><circle {...p} cx="12" cy="10" r="2.5" /></>,
     chevron: <path {...p} d="M9 6l6 6-6 6" />,
+    chevronLeft: <path {...p} d="M15 18l-6-6 6-6" />,
     chevronDown: <path {...p} d="M6 9l6 6 6-6" />,
     arrow: <path {...p} d="M5 12h14M13 6l6 6-6 6" />,
     trash: <><path {...p} d="M4 7h16M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M6 7l1 12.2a1 1 0 0 0 1 .8h8a1 1 0 0 0 1-.8L18 7" /></>,

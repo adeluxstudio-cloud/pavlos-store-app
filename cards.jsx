@@ -98,7 +98,7 @@ function ProductCard({ p, variant, qty, onAdd, onInc, onDec }) {
   return (
     <div className={"pv-card pv-card-tile" + (p.estrella ? " is-star" : "") + soldout}>
       {p.tag && <div className="pv-tile-tag"><Tag kind={p.estrella ? "gold" : "ghost"}>{p.tag}</Tag></div>}
-      <div className="pv-tile-bottle"><ProductImg p={p} size={96} /></div>
+      <div className="pv-tile-bottle"><ProductImg p={p} size={124} /></div>
       <div className="pv-tile-name">{p.nombre}</div>
       <div className="pv-tile-meta">{p.variante}{meta && <><span className="pv-dot">·</span>{meta}</>}</div>
       <div className="pv-tile-foot">
@@ -115,27 +115,35 @@ function ComboCard({ c, qty, onAdd, onInc, onDec, featured }) {
   const ahorro = c.antes ? c.antes - c.precio : 0;
   return (
     <div className={"pv-combo" + (featured ? " is-featured" : "")}>
-      <div className="pv-combo-head">
-        <div className="pv-combo-titles">
-          {c.tag && <span className="pv-combo-tag">{c.tag}</span>}
-          <h3 className="pv-combo-name">{c.nombre}</h3>
-          <p className="pv-combo-desc">{c.desc}</p>
+      {c.img && (
+        <div className="pv-combo-media">
+          <img src={c.img} alt={c.nombre} className="pv-combo-img" loading="lazy" />
+          <div className="pv-combo-media-glow" />
         </div>
-        {ahorro > 0 && <div className="pv-combo-save">Ahorras<br /><strong>{pesos(ahorro)}</strong></div>}
-      </div>
-      <ul className="pv-combo-items">
-        {c.items.map((it, i) => (
-          <li key={i}><Icon name="check" size={15} />{it}</li>
-        ))}
-      </ul>
-      <div className="pv-combo-foot">
-        <div className="pv-combo-price">
-          <span className="pv-price pv-price-lg">{pesos(c.precio)}</span>
-          {c.antes && <span className="pv-was">{pesos(c.antes)}</span>}
+      )}
+      <div className="pv-combo-content">
+        <div className="pv-combo-head">
+          <div className="pv-combo-titles">
+            {c.tag && <span className="pv-combo-tag">{c.tag}</span>}
+            <h3 className="pv-combo-name">{c.nombre}</h3>
+            <p className="pv-combo-desc">{c.desc}</p>
+          </div>
+          {ahorro > 0 && <div className="pv-combo-save">Ahorras<br /><strong>{pesos(ahorro)}</strong></div>}
         </div>
-        {qty > 0
-          ? <Stepper qty={qty} onInc={onInc} onDec={onDec} />
-          : <button type="button" className="pv-add pv-add-block" onClick={onAdd}><Icon name="plus" size={16} /> Agregar combo</button>}
+        <ul className="pv-combo-items">
+          {c.items.map((it, i) => (
+            <li key={i}><Icon name="check" size={15} />{it}</li>
+          ))}
+        </ul>
+        <div className="pv-combo-foot">
+          <div className="pv-combo-price">
+            <span className="pv-price pv-price-lg">{pesos(c.precio)}</span>
+            {c.antes && <span className="pv-was">{pesos(c.antes)}</span>}
+          </div>
+          {qty > 0
+            ? <Stepper qty={qty} onInc={onInc} onDec={onDec} />
+            : <button type="button" className="pv-add pv-add-block" onClick={onAdd}><Icon name="plus" size={16} /> Agregar combo</button>}
+        </div>
       </div>
     </div>
   );
@@ -157,12 +165,14 @@ function PromoCard({ item, qty, onAdd, onInc, onDec }) {
     <div className="pv-promo">
       {pct > 0 && <div className="pv-promo-rib">-{pct}%</div>}
       <div className="pv-promo-art">
-        {item.kind === "prod"
+        {item.img
+          ? <img src={item.img} alt={item.nombre} className="pv-promo-img" loading="lazy" />
+          : item.kind === "prod"
           ? <ProductImg p={item} size={86} />
           : <span className="pv-promo-combo"><Icon name="combo" size={34} /></span>}
       </div>
       <div className="pv-promo-name">{item.nombre}</div>
-      <div className="pv-promo-sub">{item.sub}</div>
+      <div className="pv-promo-sub">{item.sub || (item.items ? item.items.join(" · ") : "")}</div>
       <div className="pv-promo-prices">
         <span className="pv-price">{pesos(item.precio)}</span>
         {item.antes && <span className="pv-was">{pesos(item.antes)}</span>}

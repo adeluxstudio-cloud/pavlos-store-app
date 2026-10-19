@@ -13,7 +13,7 @@ function ProductImg({ p, size, glow }) {
   if (p && p.img) {
     return (
       <div className={"pv-img" + (glow ? " is-glow" : "")} style={{ width: size, height: size }}>
-        <img src={p.img} alt={p.nombre} loading="eager" decoding="async" fetchpriority="low"
+        <img src={p.img} alt={p.nombre} loading="lazy" decoding="async" fetchpriority="low"
           onLoad={e => e.currentTarget.classList.add("is-loaded")}
           onError={e => e.currentTarget.classList.add("is-loaded")} />
       </div>

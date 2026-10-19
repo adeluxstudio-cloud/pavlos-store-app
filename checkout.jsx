@@ -284,7 +284,7 @@ function CartDrawer({ isOpen, onClose, cart, add, inc, dec, clearCart }) {
                 {lines.map(l => (
                   <div key={l.id} className="pv-drawer-item">
                     <div className="pv-drawer-item-img">
-                      {l.img ? <img src={l.img} alt={l.nombre} /> : <BottlePlaceholder type={l.bottle || "spirit"} size={32} />}
+                      {l.img ? <img src={l.img} alt={l.nombre} loading="lazy" decoding="async" /> : <BottlePlaceholder type={l.bottle || "spirit"} size={32} />}
                     </div>
                     <div className="pv-drawer-item-details">
                       <div className="pv-drawer-item-name">{l.nombre}</div>

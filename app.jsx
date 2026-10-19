@@ -125,7 +125,7 @@ function ECommerceHeader({ estado, goNav, goCat, cartCount, cartTotal, onOpenCar
               {searchResults.map(p => (
                 <div key={p.id} className="pv-search-item" onClick={() => handleSelect(p)}>
                   <div className="pv-search-item-thumb">
-                    {p.img ? <img src={p.img} alt={p.nombre} /> : <BottlePlaceholder type={p.bottle || "spirit"} size={28} />}
+                    {p.img ? <img src={p.img} alt={p.nombre} loading="lazy" decoding="async" /> : <BottlePlaceholder type={p.bottle || "spirit"} size={28} />}
                   </div>
                   <div className="pv-search-item-info">
                     <div className="pv-search-item-title">{p.nombre}</div>

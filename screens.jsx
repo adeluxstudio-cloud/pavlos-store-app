@@ -180,7 +180,7 @@ function HeroSlider({ goNav, goCat }) {
                 </button>
               </div>
               <div className="pv-slide-media">
-                <img src={s.img} alt={s.titulo} />
+                <img src={s.img} alt={s.titulo} loading={idx === 0 ? "eager" : "lazy"} decoding="async" />
               </div>
             </div>
           );
@@ -249,7 +249,7 @@ function QuickCategoryGrid({ goNav, goCat }) {
             }
           }}>
           <div className="pv-quick-card-icon">
-            <img src={c.img} alt={c.label} className="pv-quick-card-img" />
+            <img src={c.img} alt={c.label} className="pv-quick-card-img" loading="lazy" decoding="async" />
           </div>
           <span className="pv-quick-card-title">{c.label}</span>
         </div>

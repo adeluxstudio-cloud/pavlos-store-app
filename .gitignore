@@ -10,3 +10,5 @@ scratch_*
 dislicores-*.png
 .thumbnail
 .env*
+
+.vercel

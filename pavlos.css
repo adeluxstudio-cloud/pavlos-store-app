@@ -82,7 +82,7 @@ body::before {
 /* las luces aparecen y se desvanecen (parpadeo lento), sin desplazarse */
 @keyframes pv-twinkle { 0%, 100% { opacity: 0; } 45% { opacity: 0.29; } 55% { opacity: 0.26; } }
 .pv-app:not(.has-motion) .pv-ambient span { animation: none; }
-.pv-main { position: relative; z-index: 1; flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+.pv-main { position: relative; z-index: 1; flex: 1; width: 100%; }
 .pv-screen { padding-bottom: 36px; animation: pv-fade 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes pv-fade {
   from { opacity: 0; transform: translateY(14px); }
@@ -566,8 +566,6 @@ body::before {
               border-color 0.28s ease,
               box-shadow 0.28s ease,
               background 0.28s ease;
-  animation: pv-card-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  will-change: transform;
 }
 .pv-card-tile:hover {
   border-color: oklch(83% 0.09 78 / 0.45);
@@ -608,7 +606,6 @@ body::before {
   object-fit: contain;
   filter: drop-shadow(0 12px 16px rgba(0,0,0,0.72));
   transition: transform 0.32s var(--pv-ease-spring), filter 0.32s ease;
-  will-change: transform;
 }
 .pv-card-tile:hover .pv-tile-bottle img {
   transform: translateY(-8px) scale(1.08);
@@ -703,9 +700,22 @@ body::before {
 
 /* ============================ CATÁLOGO sticky =========================== */
 .pv-sticky-top {
-  position: sticky; top: 0; z-index: 5; padding: 14px 18px 10px;
-  background: oklch(6% 0.005 95 / 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid oklch(100% 0 0 / 0.08);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  padding: 12px 16px 10px;
+  background: rgba(10, 10, 13, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(223, 196, 153, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+@media (min-width: 769px) {
+  .pv-sticky-top {
+    top: 72px;
+    z-index: 45;
+  }
 }
 .pv-search {
   display: flex; align-items: center; gap: 10px; padding: 0 16px; height: 48px;
@@ -2257,17 +2267,17 @@ body::before {
    RESPONSIVE MOBILE ENGINE (ANTI-CUTOFF & COMPACT OLED VIEWPORT)
    ============================================================================ */
 
-/* Prevenir desbordamiento horizontal global */
+/* Prevenir desbordamiento horizontal sin romper position: sticky */
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100vw;
 }
 .pv-app {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100vw;
 }
 .pv-main {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100vw;
 }
 
@@ -2277,6 +2287,27 @@ html, body {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   gap: 16px;
   width: 100%;
+}
+
+/* Secciones de categoría con renderizado inteligente */
+.pv-cat-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
+}
+
+@media (max-width: 768px) {
+  /* En móvil el header hace scroll natural para dar espacio al buscador sticky del catálogo */
+  .pv-header {
+    position: relative !important;
+  }
+  .pv-sticky-top {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 70 !important;
+    padding: 8px 10px 6px !important;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.75) !important;
+  }
 }
 
 @media (max-width: 640px) {
@@ -2292,9 +2323,6 @@ html, body {
   }
   .pv-cat-section {
     padding: 16px 10px 0 !important;
-  }
-  .pv-sticky-top {
-    padding: 10px 10px 8px !important;
   }
   .pv-screen {
     padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)) !important;

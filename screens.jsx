@@ -355,6 +355,7 @@ function CatalogScreen({ cart, add, inc, dec, cardStyle, activeCat, setActiveCat
   const { PRODUCTOS, CATEGORIAS } = window.PAVLOS;
   const [q, setQ] = React.useState("");
   const [filterMode, setFilterMode] = React.useState("all"); // 'all' | 'promo' | 'stock'
+  const [catLimit, setCatLimit] = React.useState(3);
 
   const term = q.trim().toLowerCase();
   const filtered = PRODUCTOS.filter(p => {
@@ -367,6 +368,29 @@ function CatalogScreen({ cart, add, inc, dec, cardStyle, activeCat, setActiveCat
   const cats = CATEGORIAS.filter(c => activeCat ? c.id === activeCat : true)
     .map(c => ({ ...c, items: filtered.filter(p => p.cat === c.id) }))
     .filter(c => c.items.length);
+
+  // Reiniciar límite al cambiar categoría activa, búsqueda o filtro
+  React.useEffect(() => {
+    setCatLimit(3);
+  }, [activeCat, q, filterMode]);
+
+  // Si busca o tiene categoría seleccionada, muestra todo directamente; si es catálogo general, carga progresivo
+  const displayCats = (activeCat || term || filterMode !== "all") ? cats : cats.slice(0, catLimit);
+
+  // Carga infinita y fluida al hacer scroll
+  React.useEffect(() => {
+    if (activeCat || term || filterMode !== "all") return;
+    if (catLimit >= cats.length) return;
+    const sentinel = document.getElementById("pv-catalog-sentinel");
+    if (!sentinel) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0] && entries[0].isIntersecting) {
+        setCatLimit(prev => Math.min(prev + 3, cats.length));
+      }
+    }, { rootMargin: "600px" });
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [catLimit, cats.length, activeCat, term, filterMode]);
 
   const gridLayout = cardStyle === "tile" || cardStyle === "plinth";
 
@@ -436,7 +460,7 @@ function CatalogScreen({ cart, add, inc, dec, cardStyle, activeCat, setActiveCat
             )}
           </div>
         )}
-        {cats.map(c => {
+        {displayCats.map(c => {
           // agrupar por casa de licor, alfabéticamente
           const casas = {};
           c.items.forEach(p => { (casas[p.casa] = casas[p.casa] || []).push(p); });
@@ -461,6 +485,11 @@ function CatalogScreen({ cart, add, inc, dec, cardStyle, activeCat, setActiveCat
             </section>
           );
         })}
+        {displayCats.length < cats.length && (
+          <div id="pv-catalog-sentinel" style={{ height: "60px", display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 0" }}>
+            <span style={{ color: "var(--pv-gold)", fontSize: "0.82rem", opacity: 0.8 }}>Descubriendo más productos…</span>
+          </div>
+        )}
       </div>
     </div>
   );
